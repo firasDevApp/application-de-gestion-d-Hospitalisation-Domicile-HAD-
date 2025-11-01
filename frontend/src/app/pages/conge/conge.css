@@ -1,0 +1,44 @@
+
+    .card{background:#ffffff;
+        padding:14px;
+        border-radius:12px;
+        box-shadow:0 6px 18px rgba(20,30,60,0.08);
+    }
+    .card h3, h4{
+        margin:0;
+        font-size:14px;
+        color:#6b7280;
+         margin-bottom: 10px;
+        }
+    
+
+    
+
+    .btn{display:inline-block;
+        padding:8px 12px;
+        border-radius:8px;
+        border:none;
+        background:#5073fb;
+        color:#ffffff;
+        cursor:pointer}
+    
+
+
+    
+    /* form styles */
+    form{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+    }
+    label{font-size:13px;
+        color:#6b7280;
+    }
+    input[type=text],input[type=datetime-local],select,textarea{
+        padding:10px;
+        border-radius:8px;
+        border:1px solid #e6eef6;
+    }
+    textarea{min-height:120px}
+
+ 
