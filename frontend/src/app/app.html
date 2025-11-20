@@ -1,9 +1,14 @@
 <app-header></app-header>
 
-<section class="main">
-  <app-sidebar></app-sidebar>
+<div class="container-scroller">
+  <div class="container-fluid page-body-wrapper">
+    <app-sidebar></app-sidebar>
 
-  <div class="main--content">
-    <router-outlet></router-outlet>
+    <div class="main-panel">
+      <router-outlet></router-outlet>
+      <app-chatbot></app-chatbot>
+
+      <app-footer></app-footer>
+    </div>
   </div>
-</section>
+</div>

@@ -1,0 +1,29 @@
+<!-- Floating Chat Icon -->
+<div id="chatbot-icon" (click)="toggleChat()"><i class="mdi mdi-robot"></i></div>
+
+<!-- Chatbot Container -->
+<div id="chatbot-container" [class.hidden]="!isOpen">
+  <div id="chatbot-header">
+    <span>Assistant HAD</span>
+    <i class="mdi mdi-close-circle" id="close-btn" (click)="toggleChat()"></i>
+  </div>
+
+  <div id="chatbot-body">
+    <div id="chatbot-messages">
+      <div *ngFor="let msg of messages" class="message" [ngClass]="msg.sender">
+        {{ msg.text }}
+      </div>
+    </div>
+  </div>
+
+  <div id="chatbot-input-container">
+    <input
+      type="text"
+      id="chatbot-input"
+      placeholder="Écrivez un message..."
+      [(ngModel)]="userMessage"
+      (keyup.enter)="sendMessage()"
+    />
+    <i class="mdi mdi-send" id="send-btn" (click)="sendMessage()"></i>
+  </div>
+</div>
