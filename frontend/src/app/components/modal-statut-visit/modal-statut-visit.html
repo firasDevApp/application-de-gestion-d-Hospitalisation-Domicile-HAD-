@@ -1,0 +1,56 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog" *ngIf="visiteData">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier le statut de la visite</h5>
+        <button type="button" class="btn-close" (click)="fermer()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Patient</label>
+            <p class="form-control-plaintext fw-bold">{{ visiteData.patient }}</p>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Type de soin</label>
+            <p class="form-control-plaintext">{{ visiteData.typeSoin }}</p>
+          </div>
+          
+          <div class="mb-3">
+            <label for="statutSelect" class="form-label">Nouveau statut</label>
+            <select class="form-select" id="statutSelect" 
+                    [(ngModel)]="nouveauStatut" 
+                    (ngModelChange)="onStatutChange()"
+                    name="statut" required>
+              <option value="">Sélectionner un statut</option>
+              
+              <option value="EN COURS">EN COURS</option>
+              <option value="TERMINÉ">TERMINÉ</option>
+              <option value="REPORTÉ">REPORTÉ</option>
+              <option value="ANNULÉ">ANNULÉ</option>
+            </select>
+          </div>
+          
+          <div class="mb-3" *ngIf="showDateField">
+            <label for="newDate" class="form-label">Nouvelle date</label>
+            <input type="date" class="form-control" id="newDate" 
+                   [(ngModel)]="nouvelleDate" name="newDate">
+          </div>
+          
+          <div class="mb-3">
+            <label for="commentaire" class="form-label">Commentaire (optionnel)</label>
+            <textarea class="form-control" id="commentaire" rows="3"
+                      [(ngModel)]="commentaire" name="commentaire"
+                      placeholder="Ajouter un commentaire sur la modification..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fermer()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="sauvegarder()">Modifier</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="visiteData"></div>

@@ -1,0 +1,22 @@
+
+.table-warning {
+  background-color: #fff3cd;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* modal-rapport.component.css */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bg-success {
+  background: linear-gradient(45deg, #28a745, #20c997) !important;
+}
+
+.modal-xl {
+  max-width: 900px;
+}

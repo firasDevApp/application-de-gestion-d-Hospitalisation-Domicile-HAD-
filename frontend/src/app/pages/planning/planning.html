@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="header">
+    <h1>🏥 Planning des Visites Médicales à Domicile - Jendouba</h1>
+    <p>Optimisation du parcours des professionnels de santé dans la région</p>
+  </div>
+
+  <div class="content">
+    <div class="map-container">
+      <h2 class="map-title">Carte Interactive des Visites - Jendouba</h2>
+      <div id="map"></div>
+
+      <div class="path-indicator">
+        <h3>🗺️ Parcours de la journée - Jendouba</h3>
+        <div class="path-steps">
+          <span class="path-step">1. Hôpital Régional</span>
+          <span class="path-arrow">→</span>
+          <span class="path-step">2. Cité Sportive</span>
+          <span class="path-arrow">→</span>
+          <span class="path-step">3. Souk-el Arba</span>
+          <span class="path-arrow">→</span>
+          <span class="path-step">4. Rond-Point AlHamama</span>
+          <span class="path-arrow">→</span>
+          <span class="path-step">5. Zone Résidentielle</span>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color legend-urgent"></div>
+          <span>Urgence</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color legend-control"></div>
+          <span>Contrôle</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color legend-vaccination"></div>
+          <span>Vaccination</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color legend-consultation"></div>
+          <span>Consultation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="visits-panel">
+      <h2 class="panel-title">Liste des Visites - Jendouba</h2>
+      <div class="visits-list">
+        <!-- Visite 1 -->
+        <div class="visit-card urgent" data-lat="36.5018" data-lng="8.7804" data-visit="1">
+          <div class="visit-order">1</div>
+          <div class="visit-header">
+            <div class="patient-name">M. Jean Martin</div>
+            <div class="visit-type type-urgent">Urgence</div>
+          </div>
+          <div class="visit-details">
+            <p><strong>Lieu:</strong> Hôpital Régional de Jendouba</p>
+            <p><strong>Motif:</strong> Douleurs thoraciques</p>
+            <p><strong>Médecin:</strong> Dr. Sophie Bernard</p>
+            <div class="visit-time">🕘 08:30 - 09:15</div>
+          </div>
+        </div>
+
+        <!-- Visite 2 -->
+        <div class="visit-card control" data-lat="36.5080" data-lng="8.7850" data-visit="2">
+          <div class="visit-order">2</div>
+          <div class="visit-header">
+            <div class="patient-name">Mme. Marie Curie</div>
+            <div class="visit-type type-control">Contrôle</div>
+          </div>
+          <div class="visit-details">
+            <p><strong>Lieu:</strong> Cité Sportive</p>
+            <p><strong>Motif:</strong> Contrôle tension artérielle</p>
+            <p><strong>Infirmier:</strong> Pierre Moreau</p>
+            <div class="visit-time">🕘 09:30 - 10:00</div>
+          </div>
+        </div>
+
+        <!-- Visite 3 -->
+        <div class="visit-card vaccination" data-lat="36.5050" data-lng="8.7750" data-visit="3">
+          <div class="visit-order">3</div>
+          <div class="visit-header">
+            <div class="patient-name">M. Robert Durand</div>
+            <div class="visit-type type-vaccination">Vaccination</div>
+          </div>
+          <div class="visit-details">
+            <p><strong>Lieu:</strong> Souk-el Arba</p>
+            <p><strong>Motif:</strong> Vaccin grippe saisonnière</p>
+            <p><strong>Infirmier:</strong> Alice Petit</p>
+            <div class="visit-time">🕘 10:15 - 10:45</div>
+          </div>
+        </div>
+
+        <!-- Visite 4 -->
+        <div class="visit-card consultation" data-lat="36.5020" data-lng="8.7900" data-visit="4">
+          <div class="visit-order">4</div>
+          <div class="visit-header">
+            <div class="patient-name">Mme. Claire Dubois</div>
+            <div class="visit-type type-consultation">Consultation</div>
+          </div>
+          <div class="visit-details">
+            <p><strong>Lieu:</strong> Rond-Point AlHamama</p>
+            <p><strong>Motif:</strong> Suivi diabète</p>
+            <p><strong>Médecin:</strong> Dr. Marc Laurent</p>
+            <div class="visit-time">🕘 11:00 - 11:45</div>
+          </div>
+        </div>
+
+        <!-- Visite 5 -->
+        <div class="visit-card urgent" data-lat="36.4980" data-lng="8.7830" data-visit="5">
+          <div class="visit-order">5</div>
+          <div class="visit-header">
+            <div class="patient-name">M. Paul Lefevre</div>
+            <div class="visit-type type-urgent">Urgence</div>
+          </div>
+          <div class="visit-details">
+            <p><strong>Lieu:</strong> Zone Résidentielle P17</p>
+            <p><strong>Motif:</strong> Chute accidentelle</p>
+            <p><strong>Médecin:</strong> Dr. Sophie Bernard</p>
+            <div class="visit-time">🕘 13:30 - 14:15</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

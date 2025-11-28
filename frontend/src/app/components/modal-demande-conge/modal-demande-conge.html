@@ -1,0 +1,84 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="mdi mdi-beach me-2"></i>
+          Nouvelle demande de congé
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="fermer()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="typeConge" class="form-label">Type de congé *</label>
+              <select class="form-select" id="typeConge" 
+                      [(ngModel)]="demande.type" name="type" required>
+                <option value="">Sélectionner un type</option>
+                <option *ngFor="let type of typesConges" [value]="type.value">
+                  {{ type.label }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Jours demandés</label>
+              <div class="form-control-plaintext fw-bold text-primary">
+                {{ calculerJours() }} jour(s)
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="dateDebut" class="form-label">Date de début *</label>
+              <input type="date" class="form-control" id="dateDebut"
+                     [(ngModel)]="demande.dateDebut" name="dateDebut"
+                     (change)="calculerJours()" required>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="dateFin" class="form-label">Date de fin *</label>
+              <input type="date" class="form-control" id="dateFin"
+                     [(ngModel)]="demande.dateFin" name="dateFin"
+                     (change)="calculerJours()" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="motif" class="form-label">Motif *</label>
+            <input type="text" class="form-control" id="motif"
+                   [(ngModel)]="demande.motif" name="motif"
+                   placeholder="Raison de la demande de congé" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="commentaire" class="form-label">Commentaires supplémentaires</label>
+            <textarea class="form-control" id="commentaire" rows="4"
+                      [(ngModel)]="demande.commentaire" name="commentaire"
+                      placeholder="Informations complémentaires..."></textarea>
+          </div>
+
+          <div class="alert alert-info">
+            <small>
+              <i class="mdi mdi-information-outline me-1"></i>
+              Les champs marqués d'un * sont obligatoires. Votre demande sera soumise à validation.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fermer()">
+          <i class="mdi mdi-close me-1"></i>Annuler
+        </button>
+        <button type="button" class="btn btn-primary" 
+                (click)="soumettreDemande()" 
+                [disabled]="!formValide()">
+          <i class="mdi mdi-send me-1"></i>Soumettre la demande
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

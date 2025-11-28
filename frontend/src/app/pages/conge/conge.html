@@ -1,27 +1,93 @@
-<section id="conges" class="page">
-  <div class="card">
-    <h3>Demandes de congés</h3>
-    <form>
-      <label>Date de début</label>
-      <input type="datetime-local" />
-      <label>Date de fin</label>
-      <input type="datetime-local" />
-      <label>Motif</label>
-      <input type="text" placeholder="Motif du congé" />
-      <div><button class="btn" type="submit">Envoyer</button></div>
-    </form>
-
-    <hr style="margin:12px 0;border:none;border-top:1px solid #f1f5f9" />
-
-    <h4>Historique des congés</h4>
-    <table>
-      <thead>
-        <tr><th>Période</th><th>Motif</th><th>Statut</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>12/06 - 16/06</td><td>Congé formation</td><td>Approuvé</td></tr>
-        <tr><td>02/07 - 06/07</td><td>Congé annuel</td><td>En attente</td></tr>
-      </tbody>
-    </table>
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-info text-white me-2">
+        <i class="mdi mdi-table-large"></i>
+      </span> Historique des congés
+    </h3>
   </div>
-</section>
+  
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="card-title mb-0">Mes demandes de congés</h4>
+            <button class="btn btn-gradient-primary btn-lg" (click)="ouvrirModalDemande()">
+              <i class="mdi mdi-plus-circle me-2"></i>
+              Nouvelle demande
+            </button>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="table-light">
+                <tr>
+                  <th>Type</th>
+                  <th>Période</th>
+                  <th>Jours</th>
+                  <th>Motif</th>
+                  <th>Statut</th>
+                  <th>Date soumission</th>
+                  <th>Validateur</th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let conge of conges">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="mdi mdi-calendar-blank text-primary me-2"></i>
+                      {{ getTypeLabel(conge.type) }}
+                    </div>
+                  </td>
+                  <td>
+                    {{ conge.dateDebut | date:'dd/MM/yyyy' }} - {{ conge.dateFin | date:'dd/MM/yyyy' }}
+                  </td>
+                  <td>
+                    <span class="fw-bold">{{ conge.jours }} jour(s)</span>
+                  </td>
+                  <td>
+                    <span class="text-truncate" style="max-width: 200px; display: inline-block;">
+                      {{ conge.motif }}
+                    </span>
+                  </td>
+                  <td>
+                    <label [class]="getBadgeClass(conge.statut)">
+                      {{ getStatutLabel(conge.statut) }}
+                    </label>
+                  </td>
+                  <td>{{ conge.dateSoumission | date:'dd/MM/yyyy' }}</td>
+                  <td>
+                    <span *ngIf="conge.validateur; else sansValidateur">
+                      {{ conge.validateur }}
+                    </span>
+                    <ng-template #sansValidateur>
+                      <span class="text-muted">-</span>
+                    </ng-template>
+                  </td>
+                  
+                </tr>
+              </tbody>
+            </table>
+            
+            <div *ngIf="conges.length === 0" class="text-center py-5">
+              <i class="mdi mdi-beach text-muted" style="font-size: 3rem;"></i>
+              <p class="text-muted mt-3">Aucune demande de congé pour le moment</p>
+              <button class="btn btn-primary mt-2" (click)="ouvrirModalDemande()">
+                Faire une demande
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de demande de congé -->
+  <app-modal-demande-conge 
+    *ngIf="showModalDemande"
+    (demandeSoumise)="onDemandeSoumise($event)"
+    (modalFerme)="fermerModalDemande()">
+  </app-modal-demande-conge>
+</div>

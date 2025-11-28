@@ -1,0 +1,109 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">
+          <i class="mdi mdi-file-document me-2"></i>
+          Rapport de visite - {{ visiteData?.patient }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="fermer()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <!-- Informations patient -->
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Patient</label>
+              <p class="form-control-plaintext">{{ visiteData?.patient }}</p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Type de soin</label>
+              <p class="form-control-plaintext">{{ visiteData?.typeSoin }}</p>
+            </div>
+          </div>
+
+          <!-- Observations générales -->
+          <div class="mb-3">
+            <label for="observations" class="form-label">Observations générales *</label>
+            <textarea class="form-control" id="observations" rows="3"
+                      [(ngModel)]="rapport.observations" name="observations"
+                      placeholder="État général du patient, comportement, autonomie..."
+                      required></textarea>
+          </div>
+
+          <!-- Soins réalisés -->
+          <div class="mb-3">
+            <label for="soinsRealises" class="form-label">Soins réalisés *</label>
+            <textarea class="form-control" id="soinsRealises" rows="3"
+                      [(ngModel)]="rapport.soinsRealises" name="soinsRealises"
+                      placeholder="Détail des soins effectués, techniques utilisées..."
+                      required></textarea>
+          </div>
+
+          <div class="row">
+            <!-- Évolution -->
+            <div class="col-md-6 mb-3">
+              <label for="evolution" class="form-label">Évolution de l'état *</label>
+              <select class="form-select" id="evolution" 
+                      [(ngModel)]="rapport.evolution" name="evolution" required>
+                <option *ngFor="let option of evolutionOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Médicaments -->
+            <div class="col-md-6 mb-3">
+              <label for="medicaments" class="form-label">Médicaments administrés</label>
+              <textarea class="form-control" id="medicaments" rows="2"
+                        [(ngModel)]="rapport.medicaments" name="medicaments"
+                        placeholder="Médicaments, posologie, horaires..."></textarea>
+            </div>
+          </div>
+
+          <!-- Incidents -->
+          <div class="mb-3">
+            <label for="incidents" class="form-label">Incidents / Événements particuliers</label>
+            <textarea class="form-control" id="incidents" rows="2"
+                      [(ngModel)]="rapport.incidents" name="incidents"
+                      placeholder="Problèmes rencontrés, réactions du patient..."></textarea>
+          </div>
+
+          <!-- Recommandations -->
+          <div class="mb-3">
+            <label for="recommandations" class="form-label">Recommandations</label>
+            <textarea class="form-control" id="recommandations" rows="2"
+                      [(ngModel)]="rapport.recommandations" name="recommandations"
+                      placeholder="Préconisations pour la prochaine visite..."></textarea>
+          </div>
+
+          <!-- Transmission -->
+          <div class="mb-3">
+            <label for="transmission" class="form-label">Transmission</label>
+            <textarea class="form-control" id="transmission" rows="2"
+                      [(ngModel)]="rapport.transmission" name="transmission"
+                      placeholder="Informations à transmettre à l'équipe soignante..."></textarea>
+          </div>
+
+          <div class="alert alert-info">
+            <small>
+              <i class="mdi mdi-information-outline me-1"></i>
+              Les champs marqués d'un * sont obligatoires. Ce rapport sera envoyé à l'administration.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fermer()">
+          <i class="mdi mdi-close me-1"></i>Annuler
+        </button>
+        <button type="button" class="btn btn-success" 
+                (click)="soumettreRapport()" 
+                [disabled]="!formValide()">
+          <i class="mdi mdi-send me-1"></i>Envoyer le rapport
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

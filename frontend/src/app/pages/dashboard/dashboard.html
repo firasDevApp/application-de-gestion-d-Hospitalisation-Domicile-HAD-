@@ -1,227 +1,158 @@
-<div class="content-wrapper">
-            <div class="page-header">
-              <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-primary text-white me-2">
-                  <i class="mdi mdi-home"></i>
-                </span> Dashboard
-              </h3>
-              <nav aria-label="breadcrumb">
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <div class="row">
-              <div class="col-md-3 stretch-card sc grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/visite.png" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Visites aujourd'hui 
-                    </h4>
-                    <h2 class="mb-5">15</h2>
-                    <h6 class="card-text">8 en cours / 3 annuler </h6>
-                    
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 stretch-card sc grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/rapport.png" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Rapports non envoyés 
-                    </h4>
-                    <h2 class="mb-5">7</h2>
-                    <h6 class="card-text"> 8 A envoyer au médecin</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6  grid-margin">
-                <div class="card bg-gradient-light card-img-holder text-white">
-                  <div class="agenda-container">
-        <div class="agenda-header">
-            
-            <div class="today-date">{{ todayDate }}</div>
-        </div>
-        <div class="agenda-grid">
-            <!-- En-têtes des jours -->
-            <div class="time-column"></div>
-            @for (day of weekDays; track day.name; let i = $index) {
-                <div class="day-header" [class.today]="isToday(day.date)">
-                    {{ day.name }}<br>
-                    {{ day.date.getDate() }}/{{ day.date.getMonth() + 1 }}
-                </div>
-            }
 
-            <!-- Lignes du temps -->
-            @for (hour of hours; track hour) {
-                <div class="time-row">
-                    <div class="time-slot">{{ hour }}</div>
-                    @for (day of weekDays; track day.name) {
-                        <div class="day-cell" [class.today]="isToday(day.date)">
-                            @for (event of getEventsForDayAndTime(day.name, hour); track event.title) {
-                                <div class="event" [style.background]="event.color">
-                                    {{ event.title }}<br>
-                                    <small>{{ event.time }}</small>
-                                </div>
-                            }
-                        </div>
-                    }
-                </div>
-            }
+
+          <div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white me-2">
+        <i class="mdi mdi-home"></i>
+      </span> Tableau de Bord HAD
+    </h3>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+          <span></span>Aperçu général <i class="mdi mdi-heart-pulse icon-sm text-primary align-middle"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Cartes statistiques -->
+  <div class="row" >
+    <div class="col-md-1"></div>
+    <div class="col-md-3 stretch-card grid-margin">
+      <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="card-body">
+          <img src="assets/images/visite.png" class="card-img-absolute" alt="circle-image" />
+          <h4 class="font-weight-normal mb-3">Visites aujourd'hui</h4>
+          <h2 class="mb-5">15</h2>
+          <h6 class="card-text">8 en cours / 3 annulées</h6>
         </div>
+      </div>
     </div>
-                </div>
+    
+    <div class="col-md-3 stretch-card grid-margin">
+      <div class="card bg-gradient-warning card-img-holder text-white">
+        <div class="card-body">
+          <img src="assets/images/rapport.png" class="card-img-absolute" alt="circle-image" />
+          <h4 class="font-weight-normal mb-3">Rapports en attente</h4>
+          <h2 class="mb-5">7</h2>
+          <h6 class="card-text">5 à envoyer au médecin</h6>
+        </div>
+      </div>
+    </div>
+
+   
+    
+  </div>
+
+  <!-- Todo et Alertes -->
+  <div class="row">
+     
+<div class="col-md-8 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Statistiques des Visites</h4>
+          <div class="chart-container">
+            <canvas id="visits-stats-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Alertes Médicales</h4>
+          <div class="alert-list">
+            <div class="alert-item alert-urgent">
+              <i class="mdi mdi-alert-circle text-danger"></i>
+              <div class="alert-content">
+                <strong>Patient critique</strong>
+                <small>M. Dupont - Tension élevée</small>
               </div>
+              <span class="alert-time">Il y a 15min</span>
             </div>
-            <div class="row">
-              <div class="col-md-7 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="clearfix">
-                      <h4 class="card-title float-left">Visit And Sales Statistics</h4>
-                      <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
-                    </div>
-                    <canvas id="visit-sale-chart" class="mt-4"></canvas>
-                  </div>
-                </div>
+            
+            <div class="alert-item alert-warning">
+              <i class="mdi mdi-clock-alert text-warning"></i>
+              <div class="alert-content">
+                <strong>Retard soins</strong>
+                <small>Mme. Martin - Pansement</small>
               </div>
-              <div class="col-md-5 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Traffic Sources</h4>
-                    <canvas id="traffic-chart"></canvas>
-                    <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
-                  </div>
-                </div>
-              </div>
+              <span class="alert-time">Il y a 1h</span>
             </div>
-           
-          
-            <div class="row">
-              <div class="col-md-7 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Recent Tickets</h4>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th> Assignee </th>
-                            <th> Subject </th>
-                            <th> Status </th>
-                            <th> Last Update </th>
-                            <th> Tracking ID </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <img src="assets/images/faces/face1.jpg" class="me-2" alt="image"> David Grey
-                            </td>
-                            <td> Fund is not recieved </td>
-                            <td>
-                              <label class="badge badge-gradient-success">DONE</label>
-                            </td>
-                            <td> Dec 5, 2017 </td>
-                            <td> WD-12345 </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <img src="assets/images/faces/face2.jpg" class="me-2" alt="image"> Stella Johnson
-                            </td>
-                            <td> High loading time </td>
-                            <td>
-                              <label class="badge badge-gradient-warning">PROGRESS</label>
-                            </td>
-                            <td> Dec 12, 2017 </td>
-                            <td> WD-12346 </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <img src="assets/images/faces/face3.jpg" class="me-2" alt="image"> Marina Michel
-                            </td>
-                            <td> Website down for one week </td>
-                            <td>
-                              <label class="badge badge-gradient-info">ON HOLD</label>
-                            </td>
-                            <td> Dec 16, 2017 </td>
-                            <td> WD-12347 </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <img src="assets/images/faces/face4.jpg" class="me-2" alt="image"> John Doe
-                            </td>
-                            <td> Loosing control on server </td>
-                            <td>
-                              <label class="badge badge-gradient-danger">REJECTED</label>
-                            </td>
-                            <td> Dec 3, 2017 </td>
-                            <td> WD-12348 </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+            
+            <div class="alert-item alert-info">
+              <i class="mdi mdi-pill text-info"></i>
+              <div class="alert-content">
+                <strong>Médicament manquant</strong>
+                <small>M. Lefebvre - Insuline</small>
               </div>
-              <div class="col-md-5 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title text-white">Todo</h4>
-                    <div class="add-items d-flex">
-                      <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?">
-                      <button class="add btn btn-gradient-primary font-weight-bold todo-list-add-btn" id="add-task">Add</button>
-                    </div>
-                    <div class="list-wrapper">
-                      <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
-                        <li>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox"> Meeting with Alisa </label>
-                          </div>
-                          <i class="remove mdi mdi-close-circle-outline"></i>
-                        </li>
-                        <li class="completed">
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox" checked> Call John </label>
-                          </div>
-                          <i class="remove mdi mdi-close-circle-outline"></i>
-                        </li>
-                        <li>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox"> Create invoice </label>
-                          </div>
-                          <i class="remove mdi mdi-close-circle-outline"></i>
-                        </li>
-                        <li>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox"> Print Statements </label>
-                          </div>
-                          <i class="remove mdi mdi-close-circle-outline"></i>
-                        </li>
-                        <li class="completed">
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox" checked> Prepare for presentation </label>
-                          </div>
-                          <i class="remove mdi mdi-close-circle-outline"></i>
-                        </li>
-                        <li>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox"> Pick up kids from school </label>
-                          </div>
-                          <i class="remove mdi mdi-close-circle-outline"></i>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+              <span class="alert-time">Il y a 2h</span>
+            </div>
+            
+            <div class="alert-item alert-success">
+              <i class="mdi mdi-check-circle text-success"></i>
+              <div class="alert-content">
+                <strong>Bilan positif</strong>
+                <small>Mme. Petit - Amélioration</small>
               </div>
+              <span class="alert-time">Il y a 3h</span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistiques et Patients récents -->
+  <div class="row">
+    
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Patients Récemment Visités</h4>
+          <div class="patients-list">
+            <div class="patient-item">
+              <img src="assets/images/faces/face1.jpg" class="patient-avatar" alt="patient">
+              <div class="patient-info">
+                <strong>M. Jean Martin</strong>
+                <small>Pansement complexe - 09:00</small>
+              </div>
+              <span class="patient-status completed">Terminé</span>
+            </div>
+            
+            <div class="patient-item">
+              <img src="assets/images/faces/face2.jpg" class="patient-avatar" alt="patient">
+              <div class="patient-info">
+                <strong>Mme. Sophie Laurent</strong>
+                <small>Injection IV - 10:30</small>
+              </div>
+              <span class="patient-status in-progress">En cours</span>
+            </div>
+            
+            <div class="patient-item">
+              <img src="assets/images/faces/face3.jpg" class="patient-avatar" alt="patient">
+              <div class="patient-info">
+                <strong>M. Robert Garnier</strong>
+                <small>Surveillance - 14:00</small>
+              </div>
+              <span class="patient-status completed">Terminé</span>
+            </div>
+            
+            <div class="patient-item">
+              <img src="assets/images/faces/face4.jpg" class="patient-avatar" alt="patient">
+              <div class="patient-info">
+                <strong>Mme. Claire Dubois</strong>
+                <small>Consultation - 16:00</small>
+              </div>
+              <span class="patient-status completed">Terminé</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+</div>

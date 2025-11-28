@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Agenda } from './agenda';
+import { ModalDemandeConge } from './modal-demande-conge';
 
-describe('Agenda', () => {
-  let component: Agenda;
-  let fixture: ComponentFixture<Agenda>;
+describe('ModalDemandeConge', () => {
+  let component: ModalDemandeConge;
+  let fixture: ComponentFixture<ModalDemandeConge>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Agenda]
+      imports: [ModalDemandeConge]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Agenda);
+    fixture = TestBed.createComponent(ModalDemandeConge);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

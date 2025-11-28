@@ -1,45 +1,61 @@
- <section id="visites" class="page" >
-        <div class="card">
-          <h3>Liste des visites</h3>
-          <div class="muted">Filtrer par date, statut, patient</div>
-          <table>
-            <thead>
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white me-2">
+        <i class="mdi mdi-calendar"></i>
+      </span> Mes visites
+    </h3>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Coordination des soins à domicile</h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
                 <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Patient</th>
-                <th>Adresse</th>
-                <th>Type</th>
-                <th>Statut</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>#V-101</td>
-                <td>2025-06-10 09:00</td>
-                <td>Ali Ben</td>
-                <td>Rue B</td>
-                <td>Pansement</td>
-                <td>Prévu</td>
-                <td>
-                    <button class="btn ghost" >Voir</button> 
-                    <button class="btn" >Rapport</button>
-                </td>
-            </tr>
-            <tr>
-                <td>#V-102</td>
-                <td>2025-06-11 14:00</td>
-                <td>Sara M.</td>
-                <td>Avenue C</td>
-                <td>Suivi médical</td>
-                <td>Terminé</td>
-                <td>
-                    <button class="btn ghost" >Voir</button> 
-                    <button class="btn" >Rapport</button>
-                </td>
-            </tr>
-            </tbody>
-          </table>
+                  <th> Patient </th>
+                  <th> Type de soin </th>
+                  <th> Statut </th>
+                  <th> Date prévue </th>
+                  <th> Dossier médical </th>
+                  <th> Actions </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let visite of visites">
+                  <td>
+                    <img [src]="visite.image" class="me-2" alt="image" style="width: 30px; height: 30px; border-radius: 50%;">
+                    {{ visite.patient }}
+                  </td>
+                  <td>{{ visite.typeSoin }}</td>
+                  <td>
+                    <label [class]="'badge ' + getBadgeClass(visite.statut)">{{ visite.statut }}</label>
+                  </td>
+                  <td>{{ visite.date | date:'dd MMM yyyy' }}</td>
+                  <td>{{ visite.id }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary" 
+                            (click)="ouvrirModal(visite)">
+                      <i class="mdi mdi-table-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Component -->
+  <app-modal-statut-visit 
+    *ngIf="showModal"
+    [visiteData]="visiteSelectionnee"
+    (statutUpdated)="onStatutUpdated($event)"
+    (modalClosed)="fermerModal()">
+  </app-modal-statut-visit>
+</div>
