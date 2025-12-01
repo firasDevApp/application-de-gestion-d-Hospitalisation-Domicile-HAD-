@@ -304,3 +304,23 @@
 }
 
 
+
+/* dashboard.css */
+.chart-container {
+  position: relative;
+  height: 250px;
+  width: 100%;
+}
+
+/* Pour le graphique en barres */
+.card:has(#visitsBarChart) .chart-container {
+  height: 300px;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+
+

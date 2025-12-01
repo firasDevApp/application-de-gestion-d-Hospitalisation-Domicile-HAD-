@@ -1,0 +1,172 @@
+<div class="containerr" [class.sign-up-mode]="isSignUpMode">
+  <div class="forms-containerr">
+    <div class="signin-signup">
+      <!-- Sign In Form -->
+      <form [formGroup]="signInForm" (ngSubmit)="onSignIn()" class="sign-in-form">
+        <h2 class="title">Sign in</h2>
+        <div class="input-field">
+          <i class="mdi mdi-email"></i>
+          <input type="email" placeholder="Email" formControlName="email" />
+        </div>
+        <div *ngIf="signInEmail?.invalid && signInEmail?.touched" class="error-message">
+          <div *ngIf="signInEmail?.errors?.['required']">Email est requis</div>
+          <div *ngIf="signInEmail?.errors?.['email']">Format d'email invalide</div>
+        </div>
+        
+        <div class="input-field">
+          <i class="mdi mdi-lock"></i>
+          <input type="password" placeholder="Mot de passe" formControlName="password" />
+        </div>
+        <div *ngIf="signInPassword?.invalid && signInPassword?.touched" class="error-message">
+          <div *ngIf="signInPassword?.errors?.['required']">Mot de passe est requis</div>
+          <div *ngIf="signInPassword?.errors?.['minlength']">
+            Le mot de passe doit contenir au moins 6 caractères
+          </div>
+        </div>
+        
+        <div *ngIf="signInError" class="error-message">
+          {{ signInError }}
+        </div>
+        
+        <button type="submit" class="btn solid" [disabled]="!signInForm.valid">
+          Login
+        </button>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="sign-up-form">
+        <h2 class="title">Sign up</h2>
+        
+        <div class="input-field">
+          <i class="mdi mdi-account-box"></i>
+          <input type="text" placeholder="Nom & Prénom" formControlName="username" />
+        </div>
+        <div *ngIf="signUpUsername?.invalid && signUpUsername?.touched" class="error-message">
+          <div *ngIf="signUpUsername?.errors?.['required']">Le nom est requis</div>
+          <div *ngIf="signUpUsername?.errors?.['minlength']">
+            Le nom doit contenir au moins 3 caractères
+          </div>
+        </div>
+        
+        <div class="input-field">
+          <i class="mdi mdi-account-card-details"></i>
+          <input type="number" placeholder="CIN" formControlName="cin" />
+        </div>
+        <div *ngIf="signUpCin?.invalid && signUpCin?.touched" class="error-message">
+          <div *ngIf="signUpCin?.errors?.['required']">Le CIN est requis</div>
+        </div>
+        
+        <div class="input-field">
+          <i class="mdi mdi-google-maps"></i>
+          <select formControlName="gouvernorat">
+            <option value="">Sélectionnez un gouvernorat</option>
+            <option value="tunis">Tunis</option>
+            <option value="ariana">Ariana</option>
+            <option value="benarous">Ben Arous</option>
+            <option value="manouba">Manouba</option>
+            <option value="nabeul">Nabeul</option>
+            <option value="zaghouan">Zaghouan</option>
+            <option value="bizerte">Bizerte</option>
+            <option value="beja">Béja</option>
+            <option value="jendouba">Jendouba</option>
+            <option value="kef">Le Kef</option>
+            <option value="siliana">Siliana</option>
+            <option value="sousse">Sousse</option>
+            <option value="monastir">Monastir</option>
+            <option value="mahdia">Mahdia</option>
+            <option value="sfax">Sfax</option>
+            <option value="kairouan">Kairouan</option>
+            <option value="kasserine">Kasserine</option>
+            <option value="sidi_bouzid">Sidi Bouzid</option>
+            <option value="gabes">Gabès</option>
+            <option value="medenine">Médenine</option>
+            <option value="tataouine">Tataouine</option>
+            <option value="gafsa">Gafsa</option>
+            <option value="tozeur">Tozeur</option>
+            <option value="kebili">Kébili</option>
+          </select>
+        </div>
+        <div *ngIf="signUpGouvernorat?.invalid && signUpGouvernorat?.touched" class="error-message">
+          <div *ngIf="signUpGouvernorat?.errors?.['required']">Le gouvernorat est requis</div>
+        </div>
+        
+        <div class="input-field">
+          <i class="mdi mdi-google-maps"></i>
+          <input type="text" placeholder="Adresse" formControlName="adresse" />
+        </div>
+        <div *ngIf="signUpAdresse?.invalid && signUpAdresse?.touched" class="error-message">
+          <div *ngIf="signUpAdresse?.errors?.['required']">L'adresse est requise</div>
+        </div>
+        
+        <div class="input-field">
+          <i class="mdi mdi-email"></i>
+          <input type="email" placeholder="Email" formControlName="email" />
+        </div>
+        <div *ngIf="signUpEmail?.invalid && signUpEmail?.touched" class="error-message">
+          <div *ngIf="signUpEmail?.errors?.['required']">Email est requis</div>
+          <div *ngIf="signUpEmail?.errors?.['email']">Format d'email invalide</div>
+        </div>
+        
+        <div class="input-field">
+          <i class="mdi mdi-lock"></i>
+          <input type="password" placeholder="Password" formControlName="password" />
+        </div>
+        <div *ngIf="signUpPassword?.invalid && signUpPassword?.touched" class="error-message">
+          <div *ngIf="signUpPassword?.errors?.['required']">Mot de passe est requis</div>
+          <div *ngIf="signUpPassword?.errors?.['minlength']">
+            Le mot de passe doit contenir au moins 6 caractères
+          </div>
+        </div>
+        
+        <div class="input-field">
+          <i class="mdi mdi-lock"></i>
+          <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
+        </div>
+        <div *ngIf="signUpConfirmPassword?.invalid && signUpConfirmPassword?.touched" class="error-message">
+          <div *ngIf="signUpConfirmPassword?.errors?.['required']">La confirmation du mot de passe est requise</div>
+        </div>
+        
+        <div *ngIf="signUpForm.errors?.['passwordMismatch'] && signUpForm.touched" class="error-message">
+          Les mots de passe ne correspondent pas
+        </div>
+        
+        <div *ngIf="signUpError" class="error-message">
+          {{ signUpError }}
+        </div>
+        
+        <button type="submit" class="btn" [disabled]="!signUpForm.valid">
+          Sign up
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="panels-containerr">
+    <div class="panel left-panel">
+      <div class="content">
+        <h3>New here ?</h3>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
+          ex ratione. Aliquid!
+        </p>
+        <button class="btn transparent" (click)="switchToSignUp()">
+          Sign up
+        </button>
+      </div>
+      <img src="assets/images/log.png" class="image" alt="Sign in" />
+    </div>
+    <div class="panel right-panel">
+      <div class="content">
+        <h3>One of us ?</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
+          laboriosam ad deleniti.
+        </p>
+        <button class="btn transparent" (click)="switchToSignIn()">
+          Sign in
+        </button>
+      </div>
+      <img src="assets/images/register.png" class="image" alt="Sign up" />
+    </div>
+  </div>
+</div>

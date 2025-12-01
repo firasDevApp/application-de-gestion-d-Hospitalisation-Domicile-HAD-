@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalDemandeConge } from '../../components/modal-demande-conge/modal-demande-conge';
+import { ModalDemandeConge } from '../../../components/infermier/modal-demande-conge/modal-demande-conge';
 
 @Component({
   selector: 'app-conge',

@@ -1,15 +1,16 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Header } from './components/header/header';
-import { Sidebar } from './components/sidebar/sidebar';
-import { Footer } from './components/footer/footer';
-import { Chatbot } from './components/chatbot/chatbot';
+import { Component } from '@angular/core';
+
+import { Infermier } from "./index/infermier/infermier";
+import { SigninSignup } from './pages/auth/signin-signup/signin-signup';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Sidebar, Footer, Chatbot],
+  imports: [
+    SigninSignup
+],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('frontend');
+ 
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalStatutVisit } from '../../components/modal-statut-visit/modal-statut-visit';
+import { ModalStatutVisit } from '../../../components/infermier/modal-statut-visit/modal-statut-visit';
 
 @Component({
   selector: 'app-visite',

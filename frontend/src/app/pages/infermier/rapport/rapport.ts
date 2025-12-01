@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalRapport } from '../../components/modal-rapport/modal-rapport';
+import { ModalRapport } from '../../../components/infermier/modal-rapport/modal-rapport';
 
 @Component({
   selector: 'app-rapport',

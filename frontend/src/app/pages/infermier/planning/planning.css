@@ -382,6 +382,12 @@ body {
   color: #333;
   border-left: 3px solid #667eea;
 }
+.visit-card.highlight {
+  transform: translateX(5px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  border-left-width: 6px;
+}
+
 
 /* Responsive */
 @media (max-width: 1024px) {
