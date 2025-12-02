@@ -1,0 +1,139 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-info text-white me-2">
+        <i class="mdi mdi-file-chart"></i>
+      </span> Gestion des rapports
+    </h3>
+  </div>
+  
+  <!-- Section Rapports à créer -->
+  <div class="row" *ngIf="visitesTerminees.length > 0">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">
+            <i class="mdi mdi-alert-circle-outline text-warning me-2"></i>
+            Rapports à compléter
+          </h4>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="table-warning">
+                <tr>
+                  <th>Patient</th>
+                  <th>Type de soin</th>
+                  <th>Date de visite</th>
+                  <th>Infirmier</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let visite of visitesTerminees">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img [src]="visite.image" class="me-2" alt="image" 
+                           style="width: 30px; height: 30px; border-radius: 50%;">
+                      {{ visite.patient }}
+                    </div>
+                  </td>
+                  <td>{{ visite.typeSoin }}</td>
+                  <td>{{ visite.date | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ visite.infirmier }}</td>
+                  <td>
+                    <button class="btn btn-warning btn-sm" 
+                            (click)="ouvrirModalRapport(visite)">
+                      <i class="mdi mdi-plus-circle me-1"></i>
+                      Créer rapport
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Historique des rapports -->
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">
+            <i class="mdi mdi-history me-2"></i>
+            Historique des rapports
+          </h4>
+          
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="table-light">
+                <tr>
+                  <th>Référence</th>
+                  <th>Patient</th>
+                  <th>Type de soin</th>
+                  <th>Date visite</th>
+                  <th>Date création</th>
+                  <th>Statut</th>
+                  <th>Destinataire</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rapport of rapports">
+                  <td>
+                    <span class="fw-bold text-primary">{{ rapport.id }}</span>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="mdi mdi-account-circle text-muted me-2"></i>
+                      {{ rapport.patient }}
+                    </div>
+                  </td>
+                  <td>{{ rapport.typeSoin }}</td>
+                  <td>{{ rapport.dateVisite | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ rapport.dateCreation | date:'dd/MM/yyyy HH:mm' }}</td>
+                  <td>
+                    <label [class]="getBadgeClass(rapport.statut)">
+                      {{ getStatutLabel(rapport.statut) }}
+                    </label>
+                  </td>
+                  <td>
+                    <small class="text-muted">{{ rapport.destinataire }}</small>
+                  </td>
+                  <td>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-outline-info btn-sm" 
+                              (click)="visualiserRapport(rapport)"
+                              title="Visualiser">
+                        <i class="mdi mdi-eye"></i>
+                      </button>
+                      <button class="btn btn-outline-primary btn-sm"
+                              (click)="telechargerRapport(rapport)"
+                              title="Télécharger">
+                        <i class="mdi mdi-download"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div *ngIf="rapports.length === 0" class="text-center py-5">
+              <i class="mdi mdi-file-document-outline text-muted" style="font-size: 3rem;"></i>
+              <p class="text-muted mt-3">Aucun rapport pour le moment</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de création de rapport -->
+  <app-modal-rapport 
+    *ngIf="showModalRapport"
+    [visiteData]="visiteSelectionnee"
+    (rapportSoumis)="onRapportSoumis($event)"
+    (modalFerme)="fermerModalRapport()">
+  </app-modal-rapport>
+</div>

@@ -1,0 +1,43 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">
+          <i class="mdi mdi-alert-circle me-2"></i>
+          Confirmer la suppression
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="fermer()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center mb-4">
+          <i class="mdi mdi-account-remove text-danger" style="font-size: 4rem;"></i>
+        </div>
+        
+        <p class="text-center">
+          Êtes-vous sûr de vouloir supprimer l'utilisateur :
+        </p>
+        
+        <div class="alert alert-danger text-center">
+          <strong>{{ user.prenom }} {{ user.nom }}</strong><br>
+          <small>{{ user.email }} • {{ getRoleLabel(user.role) }}</small>
+        </div>
+        
+        <div class="alert alert-warning">
+          <small>
+            <i class="mdi mdi-alert me-1"></i>
+            Cette action est irréversible. L'utilisateur ne pourra plus accéder au système.
+          </small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fermer()">
+          <i class="mdi mdi-close me-1"></i>Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="confirmerSuppression()">
+          <i class="mdi mdi-delete me-1"></i>Supprimer définitivement
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

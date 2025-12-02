@@ -1,0 +1,89 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="mdi mdi-account-plus me-2"></i>
+          Nouvel utilisateur
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="fermer()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="nom" class="form-label">Nom *</label>
+              <input type="text" class="form-control" id="nom"
+                     [(ngModel)]="demande.nom" name="nom" required
+                     placeholder="Entrez le nom de famille">
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="prenom" class="form-label">Prénom *</label>
+              <input type="text" class="form-control" id="prenom"
+                     [(ngModel)]="demande.prenom" name="prenom" required
+                     placeholder="Entrez le prénom">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label">Email *</label>
+              <input type="email" class="form-control" id="email"
+                     [(ngModel)]="demande.email" name="email" required
+                     placeholder="exemple@had.fr">
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="telephone" class="form-label">Téléphone *</label>
+              <input type="tel" class="form-control" id="telephone"
+                     [(ngModel)]="demande.telephone" name="telephone" required
+                     placeholder="06 12 34 56 78">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="role" class="form-label">Rôle *</label>
+              <select class="form-select" id="role" 
+                      [(ngModel)]="demande.role" name="role" required>
+                <option value="">Sélectionner un rôle</option>
+                <option *ngFor="let role of roles" [value]="role.value">
+                  {{ role.label }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="status" class="form-label">Statut *</label>
+              <select class="form-select" id="status" 
+                      [(ngModel)]="demande.status" name="status" required>
+                <option *ngFor="let status of typesStatus" [value]="status.value">
+                  {{ status.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="alert alert-info">
+            <small>
+              <i class="mdi mdi-information-outline me-1"></i>
+              Les champs marqués d'un * sont obligatoires. Un email de bienvenue sera envoyé à l'utilisateur.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fermer()">
+          <i class="mdi mdi-close me-1"></i>Annuler
+        </button>
+        <button type="button" class="btn btn-primary" 
+                (click)="soumettreDemande()" 
+                [disabled]="!formValide()">
+          <i class="mdi mdi-send me-1"></i>Créer l'utilisateur
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

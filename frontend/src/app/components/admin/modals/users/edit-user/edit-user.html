@@ -1,0 +1,87 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title">
+          <i class="mdi mdi-account-edit me-2"></i>
+          Modifier l'utilisateur
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="fermer()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="user-info-header mb-4">
+          <div class="avatar-placeholder-large">
+           
+          </div>
+          <div class="user-details">
+            <h5>{{ userEdit.prenom }} {{ userEdit.nom }}</h5>
+            <p class="text-muted mb-0">ID: {{ userEdit.id }} • Créé le {{ userEdit.dateCreation | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+
+        <form>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="edit-nom" class="form-label">Nom *</label>
+              <input type="text" class="form-control" id="edit-nom"
+                     [(ngModel)]="userEdit.nom" name="nom" required>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="edit-prenom" class="form-label">Prénom *</label>
+              <input type="text" class="form-control" id="edit-prenom"
+                     [(ngModel)]="userEdit.prenom" name="prenom" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="edit-email" class="form-label">Email *</label>
+              <input type="email" class="form-control" id="edit-email"
+                     [(ngModel)]="userEdit.email" name="email" required>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="edit-telephone" class="form-label">Téléphone *</label>
+              <input type="tel" class="form-control" id="edit-telephone"
+                     [(ngModel)]="userEdit.telephone" name="telephone" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="edit-role" class="form-label">Rôle *</label>
+              <select class="form-select" id="edit-role" 
+                      [(ngModel)]="userEdit.role" name="role" required>
+                <option *ngFor="let role of roles" [value]="role.value">
+                  {{ role.label }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="edit-status" class="form-label">Statut *</label>
+              <select class="form-select" id="edit-status" 
+                      [(ngModel)]="userEdit.status" name="status" required>
+                <option *ngFor="let status of typesStatus" [value]="status.value">
+                  {{ status.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fermer()">
+          <i class="mdi mdi-close me-1"></i>Annuler
+        </button>
+        <button type="button" class="btn btn-info" 
+                (click)="soumettreModification()" 
+                [disabled]="!formValide()">
+          <i class="mdi mdi-content-save me-1"></i>Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

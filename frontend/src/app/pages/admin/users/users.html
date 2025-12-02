@@ -1,0 +1,114 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-info text-white me-2">
+        <i class="mdi mdi-account-multiple"></i>
+      </span> Gestion des Utilisateurs
+    </h3>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="card-title mb-0">Liste des utilisateurs</h4>
+            <button class="btn btn-gradient-primary btn-lg" (click)="ouvrirModalAdd()">
+              <i class="mdi mdi-plus-circle me-2"></i>
+              Nouvel utilisateur
+            </button>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="table-light">
+                <tr>
+                  <th>Nom & Prénom</th>
+                  <th>Email</th>
+                  <th>Rôle</th>
+                  <th>Téléphone</th>
+                  <th>Statut</th>
+                  <th>Date création</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      
+                      <div>
+                        <img src="assets/images/faces/face2.jpg" class="patient-avatar" alt="patient">
+                        <strong>{{ user.prenom }} {{ user.nom }}</strong>
+                        
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ user.email }}</td>
+                  <td>
+                    <span class="role-badge">{{ getRoleLabel(user.role) }}</span>
+                  </td>
+                  <td>{{ user.telephone }}</td>
+                  <td>
+                    <label [class]="getStatusClass(user.status)">
+                      {{ getStatusLabel(user.status) }}
+                    </label>
+                  </td>
+                  <td>{{ user.dateCreation | date:'dd/MM/yyyy' }}</td>
+                  <td>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-outline-info btn-sm" 
+                              (click)="ouvrirModalEdit(user)"
+                              title="Modifier">
+                        <i class="mdi mdi-pencil"></i>
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm"
+                              (click)="ouvrirModalDelete(user)"
+                              title="Supprimer">
+                        <i class="mdi mdi-delete"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div *ngIf="users.length === 0" class="text-center py-5">
+              <i class="mdi mdi-account-off text-muted" style="font-size: 3rem;"></i>
+              <p class="text-muted mt-3">Aucun utilisateur pour le moment</p>
+              <button class="btn btn-primary mt-2" (click)="ouvrirModalAdd()">
+                Ajouter un utilisateur
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Ajout Utilisateur -->
+  <app-add-user 
+    *ngIf="showModalAdd"
+    [roles]="roles"
+    (userAdded)="onUserAdded($event)"
+    (modalFerme)="fermerModalAdd()">
+  </app-add-user>
+
+  <!-- Modal Modification Utilisateur -->
+  <app-edit-user 
+    *ngIf="showModalEdit && selectedUser"
+    [user]="selectedUser"
+    [roles]="roles"
+    (userUpdated)="onUserUpdated($event)"
+    (modalFerme)="fermerModalEdit()">
+  </app-edit-user>
+
+  <!-- Modal Suppression Utilisateur -->
+  <app-delete-user 
+    *ngIf="showModalDelete && selectedUser"
+    [user]="selectedUser"
+    [roles]="roles"
+    (userDeleted)="onUserDeleted($event)"
+    (modalFerme)="fermerModalDelete()">
+  </app-delete-user>
+</div>

@@ -1,0 +1,433 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  color: white;
+}
+
+.header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.header p {
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+  align-items: start;
+}
+
+.map-container {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  min-height: 600px;
+}
+
+.map-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 1.5em;
+}
+
+#map {
+  height: 500px;
+  width: 100%;
+  border-radius: 15px;
+  border: 3px solid #e0e0e0;
+  z-index: 1;
+}
+
+/* Panneau des visites */
+.visits-panel {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.panel-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 1.5em;
+}
+
+.visits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.visit-card {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  border-left: 5px solid;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.visit-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: currentColor;
+  opacity: 0.1;
+  transition: width 0.3s ease;
+}
+
+.visit-card:hover::before {
+  width: 100%;
+}
+
+.visit-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.visit-card.urgent {
+  border-left-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.visit-card.control {
+  border-left-color: #4ecdc4;
+  color: #4ecdc4;
+}
+
+.visit-card.vaccination {
+  border-left-color: #45b7d1;
+  color: #45b7d1;
+}
+
+.visit-card.consultation {
+  border-left-color: #96ceb4;
+  color: #96ceb4;
+}
+
+.visit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.patient-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.visit-type {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: white;
+}
+
+.type-urgent { background: #ff6b6b; }
+.type-control { background: #4ecdc4; }
+.type-vaccination { background: #45b7d1; }
+.type-consultation { background: #96ceb4; }
+
+.visit-details {
+  color: #666;
+  line-height: 1.6;
+}
+
+.visit-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: #888;
+  font-size: 0.9em;
+}
+
+/* Indicateur d'ordre */
+.visit-order {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 25px;
+  height: 25px;
+  background: #333;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+/* Légende */
+.legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #eee;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid;
+}
+
+.legend-urgent { background: #ffebee; border-color: #ff6b6b; }
+.legend-control { background: #e0f2f1; border-color: #4ecdc4; }
+.legend-vaccination { background: #e3f2fd; border-color: #45b7d1; }
+.legend-consultation { background: #f1f8e9; border-color: #96ceb4; }
+
+/* Indicateur de parcours */
+.path-indicator {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background: #e3f2fd;
+  border-radius: 10px;
+  border-left: 4px solid #45b7d1;
+}
+
+.path-indicator h3 {
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.path-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.path-step {
+  background: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.path-arrow {
+  color: #666;
+  font-weight: bold;
+}
+
+/* NOUVEAUX STYLES POUR LES MARQUEURS AMÉLIORÉS */
+.custom-marker {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  border: 4px solid white;
+}
+
+.custom-marker:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.marker-urgent { 
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e); 
+  border-color: #ff6b6b;
+}
+
+.marker-control { 
+  background: linear-gradient(135deg, #4ecdc4, #6de0d8); 
+  border-color: #4ecdc4;
+}
+
+.marker-vaccination { 
+  background: linear-gradient(135deg, #45b7d1, #67c9e0); 
+  border-color: #45b7d1;
+}
+
+.marker-consultation { 
+  background: linear-gradient(135deg, #96ceb4, #b4e0c8); 
+  border-color: #96ceb4;
+}
+
+.marker-icon {
+  font-size: 20px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.marker-number {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: white;
+  color: #333;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.8em;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border: 2px solid currentColor;
+}
+
+.marker-urgent .marker-number { border-color: #ff6b6b; }
+.marker-control .marker-number { border-color: #4ecdc4; }
+.marker-vaccination .marker-number { border-color: #45b7d1; }
+.marker-consultation .marker-number { border-color: #96ceb4; }
+
+/* Popup personnalisé */
+.custom-popup {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-width: 250px;
+}
+
+.popup-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 15px;
+  margin: -15px -15px 10px -15px;
+  border-radius: 8px 8px 0 0;
+}
+
+.popup-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.popup-subtitle {
+  font-size: 0.9em;
+  opacity: 0.9;
+}
+
+.popup-content {
+  padding: 10px 0;
+}
+
+.popup-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+.popup-detail i {
+  width: 16px;
+  text-align: center;
+  color: #667eea;
+}
+
+.popup-time {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  border-left: 3px solid #667eea;
+}
+.visit-card.highlight {
+  transform: translateX(5px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  border-left-width: 6px;
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
+  .visits-panel {
+    max-height: none;
+  }
+
+  #map {
+    height: 400px;
+  }
+}
+
+/* Animation d'entrée */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: translateX(5px) scale(1); }
+  50% { transform: translateX(5px) scale(1.02); }
+  100% { transform: translateX(5px) scale(1); }
+}
+
+.visit-card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.visit-card:nth-child(1) { animation-delay: 0.1s; }
+.visit-card:nth-child(2) { animation-delay: 0.2s; }
+.visit-card:nth-child(3) { animation-delay: 0.3s; }
+.visit-card:nth-child(4) { animation-delay: 0.4s; }
+.visit-card:nth-child(5) { animation-delay: 0.5s; }

@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 
 import { Infermier } from "./index/infermier/infermier";
 import { SigninSignup } from './pages/auth/signin-signup/signin-signup';
+import { Admin } from './index/admin/admin';
 
 @Component({
   selector: 'app-root',
   imports: [
-    SigninSignup
+    Admin
 ],
   templateUrl: './app.html',
   styleUrl: './app.css'
