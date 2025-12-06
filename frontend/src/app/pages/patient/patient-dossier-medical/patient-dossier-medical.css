@@ -1,0 +1,129 @@
+ 
+        /* Styles spécifiques au dossier médical */
+        .medical-menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .medical-menu a {
+            text-decoration: none;
+            color: #495057;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: white;
+            white-space: nowrap;
+            transition: all 0.3s;
+            border: 2px solid #e9ecef;
+        }
+
+        .medical-menu a:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .medical-menu a.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+        }
+
+        .info-item {
+            padding: 10px 0;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .medical-list {
+            list-style: none;
+        }
+
+        .medical-list li {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .antecedent-section h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .allergy-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            align-items: center;
+        }
+
+        .allergy-item.danger {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+
+        .allergy-item.warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+        }
+
+        .allergy-item.info {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+        }
+
+        .allergy-item i {
+            font-size: 1.5em;
+        }
+
+        .allergy-item.danger i {
+            color: #dc3545;
+        }
+
+        .allergy-item.warning i {
+            color: #ffc107;
+        }
+
+        .allergy-item.info i {
+            color: #17a2b8;
+        }
+
+        .contact-medical {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            align-items: center;
+        }
+
+        .contact-medical .contact-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Scroll smooth pour les ancres */
+        html {
+            scroll-behavior: smooth;
+        }

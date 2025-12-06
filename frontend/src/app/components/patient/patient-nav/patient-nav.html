@@ -1,0 +1,35 @@
+<nav class="patient-nav" [class.mobile-open]="isMobileMenuOpen">
+  <!-- Logo de l'application -->
+  <div class="nav-logo">
+    <img src="assets/images/logo-mini.png" 
+         alt="Logo Application" 
+         class="logo-image"
+         routerLink="/patient/home"
+         (click)="goToDashboard()">
+    <div class="logo-text">
+      <span class="app-name">H-A-D</span>
+      <span class="app-tagline">Espace Patient</span>
+    </div>
+  </div>
+
+  <!-- Navigation principale -->
+  <div class="nav-links">
+    @for (item of navItems; track item.path) {
+      <a [routerLink]="item.path" 
+         [class.active]="item.active"
+         (click)="setActive(item)"
+         class="nav-link">
+        <div class="nav-icon">
+          <i class="fas {{ item.icon }}"></i>
+        </div>
+        <span class="nav-label">{{ item.label }}</span>
+        
+      </a>
+    }
+  </div>
+
+  <!-- Version mobile -->
+  <div class="nav-mobile-toggle" (click)="toggleMobileMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+</nav>

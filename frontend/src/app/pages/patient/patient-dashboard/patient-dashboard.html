@@ -1,0 +1,161 @@
+ <div class="grid-3">
+            <div class="card" style="border-top-color: #4ecdc4;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-heartbeat text-primary"></i> État de santé
+                    </h3>
+                </div>
+                <div class="health-summary">
+                    <div class="health-item">
+                        <span class="label">Dernière glycémie</span>
+                        <span class="value">1.20 g/L</span>
+                        <span class="trend success"><i class="fas fa-arrow-down"></i> Stable</span>
+                    </div>
+                    <div class="health-item">
+                        <span class="label">Tension artérielle</span>
+                        <span class="value">13/8</span>
+                        <span class="trend warning"><i class="fas fa-exclamation"></i> À surveiller</span>
+                    </div>
+                    <div class="health-item">
+                        <span class="label">Poids</span>
+                        <span class="value">78 kg</span>
+                        <span class="trend success"><i class="fas fa-check"></i> Normal</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="border-top-color: #ff6b6b;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-calendar text-danger"></i> Prochaines visites
+                    </h3>
+                </div>
+                <div class="next-visits">
+                    <div class="visit-item upcoming">
+                        <div class="visit-date">
+                            <strong>15 NOV</strong>
+                            <small>10:00</small>
+                        </div>
+                        <div class="visit-details">
+                            <strong>Infirmier Pierre</strong>
+                            <p>Pansement plaie diabétique</p>
+                            <span class="badge badge-success">Confirmé</span>
+                        </div>
+                    </div>
+                    <div class="visit-item upcoming">
+                        <div class="visit-date">
+                            <strong>18 NOV</strong>
+                            <small>14:30</small>
+                        </div>
+                        <div class="visit-details">
+                            <strong>Dr. Sophie Bernard</strong>
+                            <p>Bilan trimestriel</p>
+                            <span class="badge badge-warning">En attente</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="border-top-color: #45b7d1;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-pills text-info"></i> Traitements actuels
+                    </h3>
+                </div>
+                <ul class="treatment-list">
+                    <li>
+                        <i class="fas fa-capsules"></i>
+                        <strong>Metformine 850mg</strong>
+                        <span>2x/jour - matin/soir</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-syringe"></i>
+                        <strong>Insuline glargine</strong>
+                        <span>20U - matin/soir</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-bandage"></i>
+                        <strong>Pansement plaie</strong>
+                        <span>1x/jour - soir</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Alertes importantes -->
+        <div class="card" style="border-top-color: #ffc107;">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-exclamation-triangle text-warning"></i> Alertes importantes
+                </h3>
+            </div>
+            <div class="alert alert-warning">
+                <strong><i class="fas fa-clock"></i> Rappel:</strong> Prise de sang à faire avant le 20/11/2023
+            </div>
+            <div class="alert alert-info">
+                <strong><i class="fas fa-calendar-alt"></i> Prochain rendez-vous:</strong> Cardiologue - 25/11/2023 09:30
+            </div>
+        </div>
+
+        <!-- Contacts équipe -->
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-user-md"></i> Équipe soignante
+                    </h3>
+                </div>
+                <div class="team-contacts">
+                    <div class="contact-card">
+                        <div class="contact-avatar" style="background: #4ecdc4;">PM</div>
+                        <div class="contact-info">
+                            <strong>Infirmier Pierre Moreau</strong>
+                            <p>Référent principal</p>
+                            <small><i class="fas fa-phone"></i> 06 23 45 67 89</small>
+                        </div>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-avatar" style="background: #ff6b6b;">SB</div>
+                        <div class="contact-info">
+                            <strong>Dr. Sophie Bernard</strong>
+                            <p>Médecin traitant</p>
+                            <small><i class="fas fa-phone"></i> 01 23 45 67 89</small>
+                        </div>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-bullhorn"></i> Rappels quotidiens
+                    </h3>
+                </div>
+                <ul class="reminders">
+                    <li class="reminder-item">
+                        <input type="checkbox" id="reminder1" checked>
+                        <label for="reminder1">
+                            <strong>Matin (8h):</strong> Glycémie + insuline
+                        </label>
+                    </li>
+                    <li class="reminder-item">
+                        <input type="checkbox" id="reminder2">
+                        <label for="reminder2">
+                            <strong>Midi (13h):</strong> Médicaments
+                        </label>
+                    </li>
+                    <li class="reminder-item">
+                        <input type="checkbox" id="reminder3">
+                        <label for="reminder3">
+                            <strong>Soir (20h):</strong> Glycémie + insuline + pansement
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>

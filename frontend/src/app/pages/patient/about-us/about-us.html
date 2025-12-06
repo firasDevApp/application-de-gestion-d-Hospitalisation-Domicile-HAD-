@@ -1,0 +1,112 @@
+<div class="about-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">À propos de H-A-D</h1>
+      <p class="hero-subtitle">
+        Votre partenaire de confiance pour l'hospitalisation à domicile
+      </p>
+      <div class="hero-stats">
+        @for (stat of stats; track stat.label) {
+          <div class="stat-card">
+            <i class="fas {{ stat.icon }}"></i>
+            <div class="stat-info">
+              <span class="stat-value">{{ stat.value }}</span>
+              <span class="stat-label">{{ stat.label }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="mission-section">
+    <div class="container">
+      <div class="mission-content">
+        <div class="mission-text">
+          <h2>Notre Mission</h2>
+          <p>
+            MediCare révolutionne l'hospitalisation à domicile en offrant des soins médicaux 
+            de qualité dans le confort de votre maison. Notre équipe de professionnels dévoués 
+            s'engage à fournir un accompagnement personnalisé et continu.
+          </p>
+          <p>
+            Nous croyons fermement que les patients récupèrent mieux dans leur environnement 
+            familier, entourés de leurs proches. C'est pourquoi nous mettons tout en œuvre 
+            pour rendre cette expérience aussi confortable et sécurisée que possible.
+          </p>
+        </div>
+        <div class="mission-image">
+          <img src="assets/images/register.png" alt="Notre équipe médicale">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="values-section">
+    <div class="container">
+      <h2 class="section-title">Nos Valeurs</h2>
+      <div class="values-grid">
+        @for (value of values; track value.title) {
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas {{ value.icon }}"></i>
+            </div>
+            <h3>{{ value.title }}</h3>
+            <p>{{ value.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="container">
+      <h2 class="section-title">Notre Équipe Médicale</h2>
+      <p class="section-subtitle">
+        Des professionnels expérimentés à votre service
+      </p>
+      <div class="team-grid">
+        @for (member of medicalTeam; track member.name) {
+          <div class="team-card">
+            <div class="team-image">
+              <img [src]="member.image" [alt]="member.name">
+              <div class="team-overlay">
+                <span class="experience">{{ member.experience }} d'expérience</span>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3>{{ member.name }}</h3>
+              <p class="role">{{ member.role }}</p>
+              <p class="specialty">{{ member.specialty }}</p>
+              <p class="description">{{ member.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prêt à bénéficier de nos services ?</h2>
+        <p>
+          Contactez-nous dès aujourd'hui pour un premier bilan personnalisé et gratuit.
+        </p>
+        <div class="cta-buttons">
+          <button class="btn btn-primary" routerLink="/patient/contact">
+            <i class="fas fa-envelope"></i> Nous contacter
+          </button>
+          <button class="btn btn-outline" routerLink="/patient/home">
+            <i class="fas fa-calendar-check"></i> Prendre rendez-vous
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

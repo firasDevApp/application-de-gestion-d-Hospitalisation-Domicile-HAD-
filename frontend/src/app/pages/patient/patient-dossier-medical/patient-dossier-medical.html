@@ -1,0 +1,219 @@
+ <!-- Menu du dossier médical -->
+        <div class="medical-menu">
+            <a href="patient/dossier#informations" class="active">Informations</a>
+            <a href="patient/dossier#antecedents">Antécédents</a>
+            <a href="patient/dossier#traitements">Traitements</a>
+            <a href="patient/dossier#allergies">Allergies</a>
+            <a href="patient/dossier#contacts">Contacts</a>
+        </div>
+
+        <!-- Informations personnelles -->
+        <div id="informations" class="card">
+            <h3 class="card-title">
+                <i class="fas fa-user-circle"></i> Informations personnelles
+            </h3>
+            <div class="grid-3">
+                <div class="info-item">
+                    <strong>Nom complet:</strong>
+                    <p>Jean MARTIN</p>
+                </div>
+                <div class="info-item">
+                    <strong>Date de naissance:</strong>
+                    <p>15/03/1955 (72 ans)</p>
+                </div>
+                <div class="info-item">
+                    <strong>Numéro sécurité sociale:</strong>
+                    <p>1 85 05 75 115 056 39</p>
+                </div>
+                <div class="info-item">
+                    <strong>Adresse:</strong>
+                    <p>12 Rue des Lilas, 12345 Jendouba</p>
+                </div>
+                <div class="info-item">
+                    <strong>Téléphone:</strong>
+                    <p>06 12 34 56 78</p>
+                </div>
+                <div class="info-item">
+                    <strong>Email:</strong>
+                    <p>jean.martin@email.com</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Antécédents médicaux -->
+        <div id="antecedents" class="card">
+            <h3 class="card-title">
+                <i class="fas fa-history"></i> Antécédents médicaux
+            </h3>
+            <div class="grid-2">
+                <div class="antecedent-section">
+                    <h4>Pathologies chroniques</h4>
+                    <ul class="medical-list">
+                        <li>
+                            <strong>Diabète type 2</strong>
+                            <span>Diagnostiqué en 2015</span>
+                            <span class="badge badge-warning">En cours</span>
+                        </li>
+                        <li>
+                            <strong>Hypertension artérielle</strong>
+                            <span>Diagnostiquée en 2018</span>
+                            <span class="badge badge-warning">En cours</span>
+                        </li>
+                        <li>
+                            <strong>Dyslipidémie</strong>
+                            <span>Dépistée en 2020</span>
+                            <span class="badge badge-success">Contrôlée</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="antecedent-section">
+                    <h4>Chirurgies et hospitalisations</h4>
+                    <ul class="medical-list">
+                        <li>
+                            <strong>Pontage coronarien</strong>
+                            <span>2018 - Hôpital Régional</span>
+                            <span class="badge badge-info">Passé</span>
+                        </li>
+                        <li>
+                            <strong>Appendicectomie</strong>
+                            <span>2005 - Clinique Saint-Louis</span>
+                            <span class="badge badge-info">Passé</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traitements en cours -->
+        <div id="traitements" class="card">
+            <h3 class="card-title">
+                <i class="fas fa-pills"></i> Traitements en cours
+            </h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Médicament</th>
+                        <th>Posologie</th>
+                        <th>Fréquence</th>
+                        <th>Début</th>
+                        <th>Fin prévue</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>Metformine 850mg</strong>
+                            <small>Antidiabétique oral</small>
+                        </td>
+                        <td>1 comprimé</td>
+                        <td>2x/jour (matin/soir)</td>
+                        <td>15/01/2021</td>
+                        <td>-</td>
+                        <td><span class="badge badge-success">Actif</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Insuline glargine</strong>
+                            <small>Antidiabétique injectable</small>
+                        </td>
+                        <td>20 unités</td>
+                        <td>2x/jour (matin/soir)</td>
+                        <td>10/06/2023</td>
+                        <td>-</td>
+                        <td><span class="badge badge-success">Actif</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Ramipril 5mg</strong>
+                            <small>Antihypertenseur</small>
+                        </td>
+                        <td>1 comprimé</td>
+                        <td>1x/jour (matin)</td>
+                        <td>20/03/2020</td>
+                        <td>-</td>
+                        <td><span class="badge badge-success">Actif</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Atorvastatine 20mg</strong>
+                            <small>Hypolipémiant</small>
+                        </td>
+                        <td>1 comprimé</td>
+                        <td>1x/jour (soir)</td>
+                        <td>05/09/2022</td>
+                        <td>-</td>
+                        <td><span class="badge badge-success">Actif</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Allergies -->
+        <div id="allergies" class="card">
+            <h3 class="card-title">
+                <i class="fas fa-allergies"></i> Allergies et intolérances
+            </h3>
+            <div class="grid-3">
+                <div class="allergy-item danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Allergie grave</strong>
+                        <p>Pénicilline</p>
+                        <small>Réaction anaphylactique</small>
+                    </div>
+                </div>
+                <div class="allergy-item warning">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <strong>Intolérance</strong>
+                        <p>Lactose</p>
+                        <small>Troubles digestifs</small>
+                    </div>
+                </div>
+                <div class="allergy-item info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Précaution</strong>
+                        <p>Anti-inflammatoires</p>
+                        <small>Risque rénal</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contacts médicaux -->
+        <div id="contacts" class="card">
+            <h3 class="card-title">
+                <i class="fas fa-address-book"></i> Contacts médicaux
+            </h3>
+            <div class="grid-3">
+                <div class="contact-medical">
+                    <div class="contact-avatar" style="background: #4ecdc4;">SB</div>
+                    <div>
+                        <strong>Dr. Sophie BERNARD</strong>
+                        <p>Médecin traitant</p>
+                        <small><i class="fas fa-phone"></i> 01 23 45 67 89</small><br>
+                        <small><i class="fas fa-map-marker-alt"></i> 45 Rue Principale, Jendouba</small>
+                    </div>
+                </div>
+                <div class="contact-medical">
+                    <div class="contact-avatar" style="background: #ff6b6b;">PM</div>
+                    <div>
+                        <strong>Infirmier Pierre MOREAU</strong>
+                        <p>Référent HAD</p>
+                        <small><i class="fas fa-phone"></i> 06 23 45 67 89</small><br>
+                        <small><i class="fas fa-hospital"></i> HAD Jendouba</small>
+                    </div>
+                </div>
+                <div class="contact-medical">
+                    <div class="contact-avatar" style="background: #45b7d1;">LC</div>
+                    <div>
+                        <strong>Dr. Laurent CHAUVIN</strong>
+                        <p>Cardiologue</p>
+                        <small><i class="fas fa-phone"></i> 01 98 76 54 32</small><br>
+                        <small><i class="fas fa-map-marker-alt"></i> Centre Hospitalier Régional</small>
+                    </div>
+                </div>
+            </div>
+        </div>

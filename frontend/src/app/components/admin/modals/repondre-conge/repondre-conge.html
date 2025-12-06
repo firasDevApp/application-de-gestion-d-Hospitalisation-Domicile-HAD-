@@ -1,0 +1,181 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-container modal-lg" (click)="$event.stopPropagation()">
+    <!-- En-tête du modal -->
+    <div class="modal-header" style="background: linear-gradient(135deg, #45b7d1, #3498db);">
+      <h2 class="modal-title">
+        <i class="fas fa-reply"></i> Répondre à la demande de congé
+      </h2>
+      <button class="close-btn" (click)="onClose()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Corps du modal -->
+    <div class="modal-body">
+      <!-- Informations de la demande -->
+      <div class="demande-info">
+        <div class="infirmier-header">
+          <div class="user-avatar-large" [style.background]="conge.infirmier.avatarColor">
+            {{ conge.infirmier.prenom.charAt(0) }}{{ conge.infirmier.nom.charAt(0) }}
+          </div>
+          <div class="infirmier-details">
+            <h3>{{ conge.infirmier.prenom }} {{ conge.infirmier.nom }}</h3>
+            <div class="infirmier-meta">
+              <span class="meta-item">
+                <i class="fas fa-id-card"></i> {{ conge.infirmier.matricule }}
+              </span>
+              <span class="meta-item">
+                <i class="fas fa-calendar-alt"></i> Solde congés: {{ soldeConges }} jours
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demande-details">
+          <div class="detail-card">
+            <div class="detail-icon" [style.background]="getTypeColor(conge.type)">
+              <i class="fas fa-calendar-day"></i>
+            </div>
+            <div class="detail-content">
+              <h4>Type de congé</h4>
+              <p>{{ getTypeLabel(conge.type) }}</p>
+            </div>
+          </div>
+
+          <div class="detail-card">
+            <div class="detail-icon" style="background: #4ecdc4;">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="detail-content">
+              <h4>Période demandée</h4>
+              <p>{{ formatDate(conge.dateDebut) }} → {{ formatDate(conge.dateFin) }}</p>
+              <small>{{ dureeOriginale }} jours</small>
+            </div>
+          </div>
+
+          <div class="detail-card">
+            <div class="detail-icon" style="background: #ffa726;">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="detail-content">
+              <h4>Date de demande</h4>
+              <p>{{ formatDate(conge.dateDemande) }}</p>
+              <small>Il y a {{ calculerJoursDepuis(conge.dateDemande) }} jours</small>
+            </div>
+          </div>
+        </div>
+
+       
+      </div>
+
+      <!-- Formulaire de réponse -->
+      <form (ngSubmit)="onSubmit()" #reponseForm="ngForm">
+        <!-- Décision -->
+        <div class="form-section">
+          <h3><i class="fas fa-gavel"></i> Décision</h3>
+          
+          <div class="decision-grid">
+            @for (decision of decisions; track decision.value) {
+              <button type="button"
+                      class="decision-btn"
+                      [class.active]="formData.decision === decision.value"
+                      [style.background]="decision.color"
+                      (click)="onDecisionChange(decision.value)">
+                <i class="fas {{ decision.icon }}"></i>
+                {{ decision.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Modification de dates (si nécessaire) -->
+        @if (showDateModification) {
+          <div class="form-section">
+            <h3><i class="fas fa-calendar-edit"></i> Modifier les dates</h3>
+            
+            <div class="date-modification">
+              <div class="date-inputs">
+                <div class="form-group">
+                  <label for="nouvelleDateDebut">Nouvelle date de début *</label>
+                  <input type="date" 
+                         id="nouvelleDateDebut"
+                         name="nouvelleDateDebut"
+                         [(ngModel)]="formData.nouvelleDateDebut"
+                         required
+                         [min]="minDate">
+                </div>
+
+                <div class="form-group">
+                  <label for="nouvelleDateFin">Nouvelle date de fin *</label>
+                  <input type="date" 
+                         id="nouvelleDateFin"
+                         name="nouvelleDateFin"
+                         [(ngModel)]="formData.nouvelleDateFin"
+                         required
+                         [min]="formData.nouvelleDateDebut || minDate">
+                </div>
+              </div>
+
+              <div class="duree-info">
+                <div class="duree-comparison">
+                  <div class="duree-originale">
+                    <strong>Durée originale:</strong>
+                    <span>{{ dureeOriginale }} jours</span>
+                  </div>
+                  <div class="duree-nouvelle">
+                    <strong>Nouvelle durée:</strong>
+                    <span>{{ nouvelleDuree }} jours</span>
+                  </div>
+                </div>
+                
+                @if (nouvelleDuree > dureeOriginale) {
+                  <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Attention: La nouvelle durée est plus longue que la demande originale
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- Commentaire -->
+        <div class="form-section">
+          <h3><i class="fas fa-comment-dots"></i> Commentaire</h3>
+          
+          <div class="form-group">
+            <label for="commentaire">Message à l'infirmier *</label>
+            <textarea id="commentaire"
+                      name="commentaire"
+                      [(ngModel)]="formData.commentaire"
+                      rows="4"
+                      placeholder="Saisissez votre commentaire ou justification..."
+                      required></textarea>
+          </div>
+
+        
+        </div>
+
+       
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" 
+                  class="btn btn-outline"
+                  (click)="onClose()">
+            <i class="fas fa-times"></i> Annuler
+          </button>
+          <button type="submit" 
+                  class="btn btn-primary"
+                  [disabled]="isSubmitting || !reponseForm.form.valid || (showDateModification && !areDatesValid())">
+            @if (isSubmitting) {
+              <i class="fas fa-spinner fa-spin"></i> Traitement...
+            } @else {
+              <i class="fas fa-paper-plane"></i> Envoyer la réponse
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

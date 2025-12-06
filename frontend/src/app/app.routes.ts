@@ -17,6 +17,12 @@ import { AdminConge } from './pages/admin/conge/conge';
 import { AdminVisite } from './pages/admin/visite/visite';
 import { AdminRapport } from './pages/admin/rapport/rapport';
 import { Users } from './pages/admin/users/users';
+// Pages patient
+import { PatientDashboard } from './pages/patient/patient-dashboard/patient-dashboard';
+import { PatientVisite } from './pages/patient/patient-visite/patient-visite';
+import { PatientDossierMedical } from './pages/patient/patient-dossier-medical/patient-dossier-medical';
+import { AboutUs } from './pages/patient/about-us/about-us';
+import { Contact } from './pages/contact/contact';
 
 
 export const routes: Routes = [
@@ -40,10 +46,18 @@ export const routes: Routes = [
   { path: 'admin/users', component: Users },
   { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   
+  // Routes patient avec chemins complets
+  { path: 'patient/home', component: PatientDashboard },
+  { path: 'patient/visites', component: PatientVisite },
+  { path: 'patient/dossier', component: PatientDossierMedical },
+  { path: 'patient/about-us', component: AboutUs },
+  { path: 'patient/contact', component: Contact },
+  { path: 'patient', redirectTo: 'patient/home', pathMatch: 'full' },
   
   
   // Routes de fallback
   { path: 'infermier/**', redirectTo: 'infermier/dashboard' },
   { path: 'admin/**', redirectTo: 'admin/dashboard' },
+  { path: 'patient/**', redirectTo: 'patient/home' },
   { path: '**', redirectTo: '/signin' }
 ];

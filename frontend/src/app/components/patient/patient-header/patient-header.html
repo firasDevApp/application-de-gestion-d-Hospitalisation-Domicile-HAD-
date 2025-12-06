@@ -1,0 +1,15 @@
+<div class="patient-header">
+  <div class="patient-avatar">
+    {{ patient.initials }}
+  </div>
+  <div class="patient-info">
+    <h2>{{ patient.name }}</h2>
+    <p>{{ patient.age }} ans • {{ patient.condition }} • Patient HAD depuis {{ patient.since }}</p>
+    <div class="patient-status active">{{ patient.status }}</div>
+  </div>
+  <div class="emergency-contact">
+    <button class="btn-emergency" (click)="onEmergencyClick()">
+      <i class="mdi mdi-logout"></i> Déconnexion
+    </button>
+  </div>
+</div>

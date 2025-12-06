@@ -1,0 +1,129 @@
+
+   
+        /* Styles spécifiques au dashboard */
+        .health-summary .health-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .health-summary .health-item:last-child {
+            border-bottom: none;
+        }
+
+        .health-summary .label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .health-summary .value {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .health-summary .trend {
+            font-size: 0.8em;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .health-summary .trend.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .health-summary .trend.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .next-visits .visit-item {
+            display: flex;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .next-visits .visit-item:last-child {
+            border-bottom: none;
+        }
+
+        .next-visits .visit-date {
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .next-visits .visit-date strong {
+            display: block;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .next-visits .visit-date small {
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .treatment-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .treatment-list li:last-child {
+            border-bottom: none;
+        }
+
+        .treatment-list li i {
+            color: #667eea;
+            width: 20px;
+        }
+
+        .team-contacts .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .team-contacts .contact-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .team-contacts .contact-info {
+            flex: 1;
+        }
+
+        .reminders {
+            list-style: none;
+        }
+
+        .reminders .reminder-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .reminders .reminder-item input {
+            width: 18px;
+            height: 18px;
+        }
+    

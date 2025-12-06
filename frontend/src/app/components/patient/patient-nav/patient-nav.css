@@ -1,0 +1,315 @@
+/* ========== NAVIGATION PRINCIPALE ========== */
+.patient-nav {
+  background: white;
+  border-radius: 15px;
+  padding: 0;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  border-left: 6px solid #4ecdc4;
+}
+
+/* Logo de l'application */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  flex-shrink: 0;
+  border-right: 1px solid #f0f4f8;
+}
+
+.nav-logo:hover {
+  background: linear-gradient(to right, rgba(102, 126, 234, 0.05), transparent);
+  transform: translateX(5px);
+}
+
+.logo-image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 12px;
+  padding: 8px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.nav-logo:hover .logo-image {
+  transform: rotate(10deg) scale(1.1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-name {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: #2c3e50;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-tagline {
+  font-size: 0.85em;
+  color: #718096;
+  font-weight: 500;
+}
+
+/* Navigation principale */
+.nav-links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 15px;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #718096;
+ 
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+ 
+  gap: 8px;
+}
+
+.nav-link:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+  transform: translateY(-2px);
+}
+
+.nav-link.active {
+  color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.nav-icon {
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(102, 126, 234, 0.1);
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover .nav-icon {
+  background: rgba(102, 126, 234, 0.2);
+  transform: scale(1.1);
+}
+
+.nav-link.active .nav-icon {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-label {
+  font-size: 0.9em;
+  font-weight: 500;
+  text-align: center;
+}
+
+.active-indicator {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+/* Badge de notification */
+.badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+  font-size: 0.7em;
+  font-weight: 600;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-3px); }
+}
+
+/* Menu mobile */
+.nav-mobile-toggle {
+  display: none;
+  padding: 15px 25px;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #667eea;
+  transition: all 0.3s ease;
+}
+
+.nav-mobile-toggle:hover {
+  color: #764ba2;
+  transform: rotate(90deg);
+}
+
+/* ========== VERSION MOBILE ========== */
+@media (max-width: 992px) {
+  .nav-link {
+    min-width: 80px;
+    padding: 12px 15px;
+  }
+  
+  .nav-label {
+    font-size: 0.85em;
+  }
+  
+  .logo-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .app-name {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 768px) {
+  .patient-nav {
+    flex-direction: column;
+    padding: 0;
+    border-left: none;
+    border-top: 4px solid #4ecdc4;
+  }
+  
+  .nav-logo {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #f0f4f8;
+    padding: 15px;
+  }
+  
+  .nav-mobile-toggle {
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+  }
+  
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    padding: 0;
+  }
+  
+  .patient-nav.mobile-open .nav-links {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  .nav-link {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 18px 25px;
+    border-radius: 0;
+    border-bottom: 1px solid #f0f4f8;
+    min-width: auto;
+  }
+  
+  .nav-link:last-child {
+    border-bottom: none;
+  }
+  
+  .nav-link:hover {
+    background: rgba(102, 126, 234, 0.08);
+    transform: translateX(5px);
+  }
+  
+  .nav-label {
+    font-size: 1em;
+    flex: 1;
+    text-align: left;
+  }
+  
+  .active-indicator {
+    display: none;
+  }
+  
+  .badge {
+    position: static;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-name {
+    font-size: 1.1em;
+  }
+  
+  .app-tagline {
+    font-size: 0.8em;
+  }
+  
+  .nav-link {
+    padding: 15px 20px;
+  }
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ========== ÉTAT ACTIF AVEC ROUTER ========== */
+.nav-link.router-link-active {
+  color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.nav-link.router-link-active .nav-icon {
+  background: rgba(255, 255, 255, 0.2);
+}

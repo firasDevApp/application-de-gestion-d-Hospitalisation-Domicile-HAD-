@@ -1,93 +1,165 @@
-<div class="content-wrapper">
-  <div class="page-header">
-    <h3 class="page-title">
-      <span class="page-title-icon bg-gradient-info text-white me-2">
-        <i class="mdi mdi-table-large"></i>
-      </span> Historique des congés
-    </h3>
-  </div>
+<div class="conges-container">
+  <!-- Modal de réponse -->
+  @if (showRepondreModal && selectedConge) {
+    <app-repondre-conge 
+      [conge]="selectedConge"
+      (closeModal)="closeRepondreModal()"
+      (reponseTraitee)="onReponseTraitee($event)">
+    </app-repondre-conge>
+  }
+
   
-  <div class="row">
-    <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="card-title mb-0">Mes demandes de congés</h4>
-            <button class="btn btn-gradient-primary btn-lg" (click)="ouvrirModalDemande()">
-              <i class="mdi mdi-plus-circle me-2"></i>
-              Nouvelle demande
-            </button>
-          </div>
-          
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <thead class="table-light">
-                <tr>
-                  <th>Type</th>
-                  <th>Période</th>
-                  <th>Jours</th>
-                  <th>Motif</th>
-                  <th>Statut</th>
-                  <th>Date soumission</th>
-                  <th>Validateur</th>
-                 
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let conge of conges">
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <i class="mdi mdi-calendar-blank text-primary me-2"></i>
-                      {{ getTypeLabel(conge.type) }}
-                    </div>
-                  </td>
-                  <td>
-                    {{ conge.dateDebut | date:'dd/MM/yyyy' }} - {{ conge.dateFin | date:'dd/MM/yyyy' }}
-                  </td>
-                  <td>
-                    <span class="fw-bold">{{ conge.jours }} jour(s)</span>
-                  </td>
-                  <td>
-                    <span class="text-truncate" style="max-width: 200px; display: inline-block;">
-                      {{ conge.motif }}
-                    </span>
-                  </td>
-                  <td>
-                    <label [class]="getBadgeClass(conge.statut)">
-                      {{ getStatutLabel(conge.statut) }}
-                    </label>
-                  </td>
-                  <td>{{ conge.dateSoumission | date:'dd/MM/yyyy' }}</td>
-                  <td>
-                    <span *ngIf="conge.validateur; else sansValidateur">
-                      {{ conge.validateur }}
-                    </span>
-                    <ng-template #sansValidateur>
-                      <span class="text-muted">-</span>
-                    </ng-template>
-                  </td>
-                  
-                </tr>
-              </tbody>
-            </table>
-            
-            <div *ngIf="conges.length === 0" class="text-center py-5">
-              <i class="mdi mdi-beach text-muted" style="font-size: 3rem;"></i>
-              <p class="text-muted mt-3">Aucune demande de congé pour le moment</p>
-              <button class="btn btn-primary mt-2" (click)="ouvrirModalDemande()">
-                Faire une demande
-              </button>
-            </div>
-          </div>
+    <div class="card-header">
+      <h3 class="card-title">
+        <i class="fas fa-list-alt"></i> Liste des demandes de congé
+      </h3>
+    </div>
+ <div class="filters-container">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" 
+               [(ngModel)]="recherche"
+               placeholder="Rechercher par nom, matricule ou motif...">
+      </div>
+      
+      <div class="filters-row">
+        <div class="filter-group">
+          <label><i class="fas fa-filter"></i> Statut</label>
+          <select [(ngModel)]="filtreStatut" class="form-select">
+            <option value="tous">Tous les statuts</option>
+            <option value="en_attente">En attente</option>
+            <option value="approuve">Approuvés</option>
+            <option value="refuse">Refusés</option>
+            <option value="annule">Annulés</option>
+          </select>
         </div>
+        
+        <div class="filter-group">
+          <label><i class="fas fa-tag"></i> Type de congé</label>
+          <select [(ngModel)]="filtreType" class="form-select">
+            <option value="tous">Tous les types</option>
+            @for (type of typesConges; track type.value) {
+              <option [value]="type.value">{{ type.label }}</option>
+            }
+          </select>
+        </div>
+        
+        
       </div>
     </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Infirmier</th>
+            <th>Type</th>
+            <th>Période</th>
+            <th>Durée</th>
+            <th>Date demande</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (conge of congesFiltres; track conge.id) {
+            <tr>
+              <!-- Infirmier -->
+              <td>
+                <div class="user-info">
+                  <div class="user-avatar" [style.background]="conge.infirmier.avatarColor">
+                    {{ conge.infirmier.prenom.charAt(0) }}{{ conge.infirmier.nom.charAt(0) }}
+                  </div>
+                  <div class="user-details">
+                    <strong>{{ conge.infirmier.prenom }} {{ conge.infirmier.nom }}</strong>
+                    <small>Mat: {{ conge.infirmier.matricule }}</small>
+                  </div>
+                </div>
+              </td>
+
+              <!-- Type -->
+              <td>
+                <div class="conge-type" [style.color]="getTypeColor(conge.type)">
+                  <i class="fas {{ getTypeIcon(conge.type) }}"></i>
+                  {{ getTypeLabel(conge.type) }}
+                </div>
+              </td>
+
+              <!-- Période -->
+              <td>
+                <div class="date-period">
+                  <strong>{{ conge.dateDebut | date:'dd/MM/yyyy' }}</strong>
+                  <i class="fas fa-arrow-right text-muted"></i>
+                  <strong>{{ conge.dateFin | date:'dd/MM/yyyy' }}</strong>
+                </div>
+              </td>
+
+              <!-- Durée -->
+              <td>
+                <span class="duree-badge">
+                  {{ conge.duree }} jour(s)
+                </span>
+              </td>
+
+              <!-- Date demande -->
+              <td>
+                {{ conge.dateDemande | date:'dd/MM/yyyy' }}
+              </td>
+
+              <!-- Statut -->
+              <td>
+                <span [class]="'badge ' + getStatutClass(conge.statut)">
+                  {{ getStatutLabel(conge.statut) }}
+                </span>
+              </td>
+
+              <!-- Actions -->
+              <td>
+                <div class="action-buttons">
+                  <!-- Voir détails -->
+                 
+
+                  <!-- Pièce jointe -->
+                  @if (conge.pieceJointe) {
+                    <button class="btn-icon" (click)="telechargerPieceJointe(conge)"
+                            title="Télécharger la pièce jointe">
+                      <i class="fas fa-paperclip"></i>
+                    </button>
+                  }
+
+                  <!-- Répondre (uniquement pour en attente) -->
+                  @if (conge.statut === 'en_attente') {
+                    <button class="btn-icon btn-primary" 
+                            (click)="openRepondreModal(conge)"
+                            title="Répondre à la demande">
+                      <i class="fas fa-reply"></i>
+                    </button>
+                  }
+
+                  <!-- Historique des réponses -->
+                  @if (conge.statut !== 'en_attente') {
+                    <button class="btn-icon btn-info"
+                            (click)="voirDetails(conge)"
+                            title="Voir la réponse">
+                      <i class="fas fa-history"></i>
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <!-- Message si aucun résultat -->
+      @if (congesFiltres.length === 0) {
+        <div class="empty-state">
+          <i class="fas fa-calendar-times"></i>
+          <h4>Aucun congé trouvé</h4>
+          <p>Modifiez vos filtres pour afficher les résultats</p>
+        </div>
+      }
+    </div>
+  </div>
   </div>
 
-  <!-- Modal de demande de congé -->
-  <app-modal-demande-conge 
-    *ngIf="showModalDemande"
-    (demandeSoumise)="onDemandeSoumise($event)"
-    (modalFerme)="fermerModalDemande()">
-  </app-modal-demande-conge>
-</div>

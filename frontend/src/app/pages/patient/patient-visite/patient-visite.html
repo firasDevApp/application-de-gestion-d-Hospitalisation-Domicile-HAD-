@@ -1,0 +1,153 @@
+<div class="patient-visite-container">
+  <!-- Modal de demande de visite -->
+  @if (showDemandeModal) {
+    <app-demande-visit 
+      (closeModal)="closeDemandeModal()"
+      (visitRequested)="onVisitRequested($event)">
+    </app-demande-visit>
+  }
+
+  <!-- En-tête de la page -->
+
+
+  <!-- Visites à venir -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <i class="fas fa-calendar-day text-primary"></i> Visites à venir
+      </h3>
+      <div class="card-actions">
+        <button class="btn btn-primary" (click)="openDemandeModal()">
+          <i class="fas fa-calendar-plus"></i> Demander une visite
+        </button>
+      </div>
+    </div>
+    
+    <div class="visits-container">
+      @for (visit of upcomingVisits; track visit.id) {
+        <div class="visit-card upcoming">
+          <div class="visit-date">
+            <div class="date-day">{{ visit.date }}</div>
+            <div class="date-month">{{ visit.month }}</div>
+            <div class="date-time">{{ visit.time }}</div>
+          </div>
+          <div class="visit-details">
+            <div class="visit-header">
+              <h4>{{ visit.title }}</h4>
+              <span [class]="'badge badge-' + (visit.status === 'Confirmé' ? 'success' : 'warning')">
+                {{ visit.status }}
+              </span>
+            </div>
+            <p class="visit-professional">
+              <i class="fas fa-user-nurse"></i> {{ visit.professional }}
+            </p>
+            <p class="visit-duration">
+              <i class="fas fa-clock"></i> Durée estimée: {{ visit.duration }}
+            </p>
+            @if (visit.notes) {
+              <p class="visit-notes">
+                <i class="fas fa-sticky-note"></i> {{ visit.notes }}
+              </p>
+            }
+            <div class="visit-actions">
+              <button class="btn btn-outline btn-sm" 
+                      (click)="reporterVisite(visit.id)">
+                <i class="fas fa-calendar-times"></i> Reporter
+              </button>
+              <button class="btn btn-primary btn-sm" 
+                      (click)="voirItineraire(visit.id)">
+                <i class="fas fa-directions"></i> Itinéraire
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Historique des visites -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <i class="fas fa-history text-secondary"></i> Historique des visites
+      </h3>
+      <div class="filters">
+        <select class="form-control" style="width: auto;">
+          <option>Toutes les visites</option>
+          <option>Ce mois</option>
+          <option>3 derniers mois</option>
+          <option>Cette année</option>
+        </select>
+      </div>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Professionnel</th>
+          <th>Type de soin</th>
+          <th>Durée</th>
+          <th>Statut</th>
+          <th>Rapport</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (visit of visitHistory; track visit.id) {
+          <tr>
+            <td>
+              <strong>{{ visit.date }}</strong>
+              <small>{{ visit.time }}</small>
+            </td>
+            <td>
+              <div class="professional-info">
+                <div class="avatar-small" [style.background]="visit.professional.color">
+                  {{ visit.professional.initials }}
+                </div>
+                <span>{{ visit.professional.name }}</span>
+              </div>
+            </td>
+            <td>{{ visit.type }}</td>
+            <td>{{ visit.duration }}</td>
+            <td>
+              <span class="badge badge-success">{{ visit.status }}</span>
+            </td>
+            <td>
+              <button class="btn btn-outline btn-sm" 
+                      (click)="voirRapport(visit.id)">
+                <i class="fas fa-file-medical"></i> Voir
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Fréquence des visites -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <i class="fas fa-chart-line text-info"></i> Fréquence des visites
+      </h3>
+    </div>
+    <div class="frequency-chart">
+      <div class="chart-bar" style="width: 90%;">
+        <span>Novembre</span>
+        <div class="bar-fill">4 visites</div>
+      </div>
+      <div class="chart-bar" style="width: 70%;">
+        <span>Octobre</span>
+        <div class="bar-fill">3 visites</div>
+      </div>
+      <div class="chart-bar" style="width: 60%;">
+        <span>Septembre</span>
+        <div class="bar-fill">2 visites</div>
+      </div>
+      <div class="chart-bar" style="width: 80%;">
+        <span>Août</span>
+        <div class="bar-fill">3 visites</div>
+      </div>
+    </div>
+  </div>
+</div>

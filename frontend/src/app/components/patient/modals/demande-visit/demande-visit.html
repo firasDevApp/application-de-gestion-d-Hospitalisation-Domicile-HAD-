@@ -1,0 +1,196 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <!-- En-tête du modal -->
+    <div class="modal-header">
+      <h2 class="modal-title">
+        <i class="fas fa-calendar-plus"></i> Demander une visite
+      </h2>
+      <button class="close-btn" (click)="onClose()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Corps du modal -->
+    <div class="modal-body">
+      <!-- Messages d'erreur -->
+      @if (errors.length > 0) {
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div class="error-list">
+            <strong>Veuillez corriger les erreurs suivantes :</strong>
+            <ul>
+              @for (error of errors; track error) {
+                <li>{{ error }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+
+      <!-- Formulaire -->
+      <form (ngSubmit)="onSubmit()" #visitForm="ngForm">
+        <!-- Type de visite -->
+        <div class="form-section">
+          <h3><i class="fas fa-stethoscope"></i> Type de visite</h3>
+          <div class="form-group">
+            <label for="visitType">Nature de la visite *</label>
+            <select id="visitType" 
+                    name="visitType" 
+                    [(ngModel)]="formData.visitType"
+                    required>
+              <option value="" disabled>Sélectionnez le type de visite</option>
+              @for (type of visitTypes; track type.id) {
+                <option [value]="type.id">{{ type.name }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="professional">Professionnel souhaité</label>
+            <select id="professional" 
+                    name="professional" 
+                    [(ngModel)]="formData.professional">
+              <option value="">Aucune préférence</option>
+              @for (prof of professionals; track prof.id) {
+                <option [value]="prof.id">{{ prof.name }} - {{ prof.specialty }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <!-- Date et heure -->
+        <div class="form-section">
+          <h3><i class="fas fa-clock"></i> Date et heure</h3>
+          
+          <div class="quick-dates">
+            <button type="button" class="btn-date" (click)="setToday()">
+              <i class="fas fa-calendar-day"></i> Aujourd'hui
+            </button>
+            <button type="button" class="btn-date" (click)="setTomorrow()">
+              <i class="fas fa-calendar-alt"></i> Demain
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label for="date">Date souhaitée *</label>
+            <input type="date" 
+                   id="date" 
+                   name="date" 
+                   [(ngModel)]="formData.date"
+                   [min]="minDate"
+                   [max]="maxDate"
+                   required>
+            @if (formData.date && isDateUnavailable(formData.date)) {
+              <div class="date-warning">
+                <i class="fas fa-exclamation-circle"></i> Cette date n'est pas disponible
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="time">Horaire précis</label>
+            <input type="time" 
+                   id="time" 
+                   name="time" 
+                   [(ngModel)]="formData.time"
+                   min="08:00"
+                   max="20:00">
+          </div>
+
+          <div class="form-group">
+            <label>Ou sélectionnez un créneau</label>
+            <div class="time-slot-grid">
+              @for (slot of timeSlots; track slot.value) {
+                <button type="button" 
+                        class="time-slot-btn"
+                        [class.active]="formData.preferredTimeSlot === slot.value"
+                        (click)="formData.preferredTimeSlot = slot.value">
+                  {{ slot.label }}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Priorité et urgence -->
+        <div class="form-section">
+          <h3><i class="fas fa-exclamation-circle"></i> Priorité</h3>
+          
+          <div class="priority-grid">
+            @for (priority of priorities; track priority.id) {
+              <button type="button" 
+                      class="priority-btn"
+                      [style.background]="priority.color"
+                      [class.active]="formData.priority === priority.id"
+                      (click)="formData.priority = priority.id">
+                <i class="fas fa-flag"></i>
+                {{ priority.name }}
+              </button>
+            }
+          </div>
+
+          <div class="emergency-section">
+            <div class="emergency-checkbox">
+              <input type="checkbox" 
+                     id="emergency" 
+                     name="isEmergency"
+                     [(ngModel)]="formData.isEmergency"
+                     (change)="setEmergency()">
+              <label for="emergency">
+                <i class="fas fa-ambulance"></i> Visite d'urgence
+              </label>
+            </div>
+            @if (formData.isEmergency) {
+              <div class="emergency-alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Pour les urgences immédiates, contactez le 15</p>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Détails -->
+        <div class="form-section">
+          <h3><i class="fas fa-notes-medical"></i> Détails</h3>
+          
+          <div class="form-group">
+            <label for="description">Description de la visite *</label>
+            <textarea id="description" 
+                      name="description" 
+                      [(ngModel)]="formData.description"
+                      rows="3"
+                      placeholder="Décrivez la raison de votre visite..."
+                      required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="symptoms">Symptômes observés</label>
+            <textarea id="symptoms" 
+                      name="symptoms" 
+                      [(ngModel)]="formData.symptoms"
+                      rows="2"
+                      placeholder="Listez les symptômes si nécessaire..."></textarea>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" 
+                  class="btn btn-outline"
+                  (click)="onClose()">
+            <i class="fas fa-times"></i> Annuler
+          </button>
+          <button type="submit" 
+                  class="btn btn-primary"
+                  [disabled]="isSubmitting">
+            @if (isSubmitting) {
+              <i class="fas fa-spinner fa-spin"></i> Traitement en cours...
+            } @else {
+              <i class="fas fa-paper-plane"></i> Envoyer la demande
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

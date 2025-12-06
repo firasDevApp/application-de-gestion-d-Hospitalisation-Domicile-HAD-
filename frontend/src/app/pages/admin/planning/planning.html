@@ -1,127 +1,257 @@
-<div class="container">
-  <div class="header">
-    <h1>🏥 Planning des Visites Médicales à Domicile - Jendouba</h1>
-    <p>Optimisation du parcours des professionnels de santé dans la région</p>
+<div class="admin-planning-container">
+  <!-- En-tête de la page -->
+  <div class="page-header">
+    <h1>
+      <i class="fas fa-calendar-alt text-primary"></i> Gestion des Visites
+    </h1>
+    <p class="page-subtitle">Affectation des visites aux infirmiers</p>
   </div>
 
-  <div class="content">
-    <div class="map-container">
-      <h2 class="map-title">Carte Interactive des Visites - Jendouba</h2>
-      <div id="map"></div>
-
-      <div class="path-indicator">
-        <h3>🗺️ Parcours de la journée - Jendouba</h3>
-        <div class="path-steps">
-          <span class="path-step">1. Hôpital Régional</span>
-          <span class="path-arrow">→</span>
-          <span class="path-step">2. Cité Sportive</span>
-          <span class="path-arrow">→</span>
-          <span class="path-step">3. Souk-el Arba</span>
-          <span class="path-arrow">→</span>
-          <span class="path-step">4. Rond-Point AlHamama</span>
-          <span class="path-arrow">→</span>
-          <span class="path-step">5. Zone Résidentielle</span>
-        </div>
-      </div>
-
-      <div class="legend">
-        <div class="legend-item">
-          <div class="legend-color legend-urgent"></div>
-          <span>Urgence</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-color legend-control"></div>
-          <span>Contrôle</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-color legend-vaccination"></div>
-          <span>Vaccination</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-color legend-consultation"></div>
-          <span>Consultation</span>
-        </div>
+  <!-- Statistiques -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-content">
+        <h3>{{ getStats().total }}</h3>
+        <p>Total des visites</p>
       </div>
     </div>
-
-    <div class="visits-panel">
-      <h2 class="panel-title">Liste des Visites - Jendouba</h2>
-      <div class="visits-list">
-        <!-- Visite 1 -->
-        <div class="visit-card urgent" data-lat="36.5018" data-lng="8.7804" data-visit="1">
-          <div class="visit-order">1</div>
-          <div class="visit-header">
-            <div class="patient-name">M. Jean Martin</div>
-            <div class="visit-type type-urgent">Urgence</div>
-          </div>
-          <div class="visit-details">
-            <p><strong>Lieu:</strong> Hôpital Régional de Jendouba</p>
-            <p><strong>Motif:</strong> Douleurs thoraciques</p>
-            <p><strong>Médecin:</strong> Dr. Sophie Bernard</p>
-            <div class="visit-time">🕘 08:30 - 09:15</div>
-          </div>
-        </div>
-
-        <!-- Visite 2 -->
-        <div class="visit-card control" data-lat="36.5080" data-lng="8.7850" data-visit="2">
-          <div class="visit-order">2</div>
-          <div class="visit-header">
-            <div class="patient-name">Mme. Marie Curie</div>
-            <div class="visit-type type-control">Contrôle</div>
-          </div>
-          <div class="visit-details">
-            <p><strong>Lieu:</strong> Cité Sportive</p>
-            <p><strong>Motif:</strong> Contrôle tension artérielle</p>
-            <p><strong>Infirmier:</strong> Pierre Moreau</p>
-            <div class="visit-time">🕘 09:30 - 10:00</div>
-          </div>
-        </div>
-
-        <!-- Visite 3 -->
-        <div class="visit-card vaccination" data-lat="36.5050" data-lng="8.7750" data-visit="3">
-          <div class="visit-order">3</div>
-          <div class="visit-header">
-            <div class="patient-name">M. Robert Durand</div>
-            <div class="visit-type type-vaccination">Vaccination</div>
-          </div>
-          <div class="visit-details">
-            <p><strong>Lieu:</strong> Souk-el Arba</p>
-            <p><strong>Motif:</strong> Vaccin grippe saisonnière</p>
-            <p><strong>Infirmier:</strong> Alice Petit</p>
-            <div class="visit-time">🕘 10:15 - 10:45</div>
-          </div>
-        </div>
-
-        <!-- Visite 4 -->
-        <div class="visit-card consultation" data-lat="36.5020" data-lng="8.7900" data-visit="4">
-          <div class="visit-order">4</div>
-          <div class="visit-header">
-            <div class="patient-name">Mme. Claire Dubois</div>
-            <div class="visit-type type-consultation">Consultation</div>
-          </div>
-          <div class="visit-details">
-            <p><strong>Lieu:</strong> Rond-Point AlHamama</p>
-            <p><strong>Motif:</strong> Suivi diabète</p>
-            <p><strong>Médecin:</strong> Dr. Marc Laurent</p>
-            <div class="visit-time">🕘 11:00 - 11:45</div>
-          </div>
-        </div>
-
-        <!-- Visite 5 -->
-        <div class="visit-card urgent" data-lat="36.4980" data-lng="8.7830" data-visit="5">
-          <div class="visit-order">5</div>
-          <div class="visit-header">
-            <div class="patient-name">M. Paul Lefevre</div>
-            <div class="visit-type type-urgent">Urgence</div>
-          </div>
-          <div class="visit-details">
-            <p><strong>Lieu:</strong> Zone Résidentielle P17</p>
-            <p><strong>Motif:</strong> Chute accidentelle</p>
-            <p><strong>Médecin:</strong> Dr. Sophie Bernard</p>
-            <div class="visit-time">🕘 13:30 - 14:15</div>
-          </div>
-        </div>
+    <div class="stat-card">
+      <div class="stat-content">
+        <h3>{{ getStats().enAttente }}</h3>
+        <p>En attente</p>
       </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-content">
+        <h3>{{ getStats().affectees }}</h3>
+        <p>Affectées</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-content">
+        <h3>{{ getStats().urgentes }}</h3>
+        <p>Urgentes</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="filters-card">
+    <div class="filters-row">
+      <div class="filter-group">
+        <label>Statut :</label>
+        <select [(ngModel)]="filtreStatut" (change)="appliquerFiltres()" class="form-select">
+          <option value="tous">Tous les statuts</option>
+          <option value="en_attente">En attente</option>
+          <option value="affecte">Affectées</option>
+          <option value="confirme">Confirmées</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label>Priorité :</label>
+        <select [(ngModel)]="filtrePriorite" (change)="appliquerFiltres()" class="form-select">
+          <option value="tous">Toutes priorités</option>
+          <option value="urgent">Urgentes</option>
+          <option value="normal">Normales</option>
+        </select>
+      </div>
+      
+      <div class="filter-actions">
+        <button class="btn btn-outline" (click)="resetFiltres()">
+          <i class="fas fa-redo"></i> Réinitialiser
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tableau des visites -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <i class="fas fa-list-alt"></i> Liste des Visites
+      </h3>
+      <span class="badge badge-info">{{ planningFiltre.length }} visite(s)</span>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="visits-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Patient</th>
+            <th>Type</th>
+            <th>Motif</th>
+            <th>Date souhaitée</th>
+            <th>Heure</th>
+            <th>Priorité</th>
+            <th>Statut</th>
+            <th>Infirmier</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (visite of planningFiltre; track visite.id; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>
+                <div class="patient-info">
+                  <div class="patient-avatar" [style.background]="visite.patient.avatarColor">
+                    {{ visite.patient.prenom.charAt(0) }}{{ visite.patient.nom.charAt(0) }}
+                  </div>
+                  <div>
+                    <strong>{{ visite.patient.prenom }} {{ visite.patient.nom }}</strong>
+                    <div class="small-text">{{ visite.patient.telephone }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="visit-type" [style.background]="getTypeColor(visite.type)">
+                  <i class="fas {{ getTypeIcon(visite.type) }}"></i>
+                  {{ getTypeLabel(visite.type) }}
+                </span>
+              </td>
+              <td>{{ visite.motif }}</td>
+              <td>{{ formatDate(visite.dateSouhaitee) }}</td>
+              <td>{{ visite.heureSouhaitee }}</td>
+              <td>
+                <span [class]="'badge ' + getPrioriteClass(visite.priorite)">
+                  {{ getPrioriteLabel(visite.priorite) }}
+                </span>
+              </td>
+              <td>
+                <span [class]="'badge ' + getStatutClass(visite.statut)">
+                  {{ getStatutLabel(visite.statut) }}
+                </span>
+              </td>
+              <td>
+                @if (visite.infirmierAffecte) {
+                  <div class="infirmier-assigne">
+                    <i class="fas fa-user-check text-success"></i>
+                    {{ getInfirmierNom(visite.infirmierAffecte) }}
+                  </div>
+                } @else {
+                  <span class="text-muted">Non affectée</span>
+                }
+              </td>
+              <td>
+                <div class="action-buttons">
+                  @if (!visite.infirmierAffecte) {
+                    <button class="btn-icon btn-primary" 
+                            title="Affecter à un infirmier"
+                            (click)="ouvrirModalAffectation(visite)">
+                      <i class="fas fa-user-plus"></i>
+                    </button>
+                  } @else {
+                    <button class="btn-icon btn-warning" 
+                            title="Désaffecter"
+                            (click)="desaffecterVisite(visite.id)">
+                      <i class="fas fa-user-minus"></i>
+                    </button>
+                  }
+                  
+                  <button class="btn-icon btn-info" title="Détails">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      
+      @if (planningFiltre.length === 0) {
+        <div class="empty-state">
+          <i class="fas fa-calendar-times fa-2x"></i>
+          <h4>Aucune visite trouvée</h4>
+          <p>Modifiez vos filtres pour afficher les résultats</p>
+        </div>
+      }
     </div>
   </div>
 </div>
+
+<!-- Modal d'affectation -->
+@if (showModal && selectedVisite) {
+  <div class="modal-overlay" (click)="fermerModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-user-plus"></i> Affecter la visite
+        </h3>
+        <button class="btn-close" (click)="fermerModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Informations sur la visite -->
+        <div class="visite-info">
+          <h4>Informations de la visite</h4>
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Patient :</strong>
+              <span>{{ selectedVisite.patient.prenom }} {{ selectedVisite.patient.nom }}</span>
+            </div>
+            <div class="info-item">
+              <strong>Motif :</strong>
+              <span>{{ selectedVisite.motif }}</span>
+            </div>
+            <div class="info-item">
+              <strong>Date :</strong>
+              <span>{{ formatDate(selectedVisite.dateSouhaitee) }}</span>
+            </div>
+            <div class="info-item">
+              <strong>Heure :</strong>
+              <span>{{ selectedVisite.heureSouhaitee }}</span>
+            </div>
+            <div class="info-item">
+              <strong>Adresse :</strong>
+              <span>{{ selectedVisite.adresseExacte }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Liste des infirmiers disponibles -->
+        <div class="infirmiers-section">
+          <h4>Infirmiers disponibles</h4>
+          @if (getInfirmiersDisponibles().length > 0) {
+            <div class="infirmiers-grid">
+              @for (infirmier of getInfirmiersDisponibles(); track infirmier.id) {
+                <div class="infirmier-card">
+                  <div class="infirmier-avatar" [style.background]="infirmier.avatarColor">
+                    {{ infirmier.prenom.charAt(0) }}{{ infirmier.nom.charAt(0) }}
+                  </div>
+                  <div class="infirmier-details">
+                    <h5>{{ infirmier.prenom }} {{ infirmier.nom }}</h5>
+                    <div class="specialite">{{ infirmier.specialite }}</div>
+                    <div class="matricule">{{ infirmier.matricule }}</div>
+                    <div class="charge-travail">
+                      <i class="fas fa-briefcase"></i>
+                      {{ infirmier.chargeTravail }} visite(s)
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm" 
+                          (click)="affecterVisite(infirmier.id)">
+                    <i class="fas fa-check"></i> Affecter
+                  </button>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="empty-infirmiers">
+              <i class="fas fa-user-slash"></i>
+              <p>Aucun infirmier disponible</p>
+            </div>
+          }
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="btn btn-outline" (click)="fermerModal()">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+}
