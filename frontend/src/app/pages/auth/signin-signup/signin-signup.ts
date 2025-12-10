@@ -1,91 +1,92 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-signin-signup',
-  imports: [CommonModule, ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  providers: [AuthService],
   templateUrl: './signin-signup.html',
   styleUrls: ['./signin-signup.css']
 })
-export class SigninSignup implements OnInit {
+export class SigninSignup {
+
   isSignUpMode = false;
   signInForm: FormGroup;
   signUpForm: FormGroup;
   signInError = '';
   signUpError = '';
 
-  constructor(private fb: FormBuilder) {
-    // Formulaire de connexion - utiliser 'email' au lieu de 'username'
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+
     this.signInForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]], // Changé de 'username' à 'email'
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
-    // Formulaire d'inscription - ajouter les champs manquants
     this.signUpForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
-      cin: ['', [Validators.required]], // Ajouté
-      gouvernorat: ['', [Validators.required]], // Ajouté
-      adresse: ['', [Validators.required]], // Ajouté
+      cin: ['', Validators.required],
+      gouvernorat: ['', Validators.required],
+      adresse: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', Validators.required]
     }, { validators: this.passwordMatchValidator });
   }
 
-  ngOnInit(): void {}
 
-  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-    
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      return { 'passwordMismatch': true };
-    }
-    return null;
+  passwordMatchValidator(control: AbstractControl) {
+    const p = control.get('password');
+    const cp = control.get('confirmPassword');
+
+    return p && cp && p.value !== cp.value ? { passwordMismatch: true } : null;
   }
 
-  switchToSignUp(): void {
+  switchToSignUp() {
     this.isSignUpMode = true;
     this.signInError = '';
-    this.signUpError = '';
   }
 
-  switchToSignIn(): void {
+  switchToSignIn() {
     this.isSignUpMode = false;
-    this.signInError = '';
     this.signUpError = '';
   }
 
-  onSignIn(): void {
-    if (this.signInForm.valid) {
-      const formValue = this.signInForm.value;
-      console.log('Sign In Attempt:', formValue);
-      
-      // Ici vous pouvez appeler votre service d'authentification
-      // this.authService.signIn(formValue).subscribe(...)
-      
-      // Exemple de gestion d'erreur
-      // this.signInError = 'Invalid credentials';
+ onSignIn() {
+  if (!this.signInForm.valid) return;
+
+  console.log("LOGIN REQUEST:", this.signInForm.value);
+
+  this.authService.login(this.signInForm.value).subscribe({
+    next: (res) => {
+      console.log("LOGIN SUCCESS:", res);
+      this.router.navigate(['/patient/home']);
+    },
+    error: (err) => {
+      console.error("LOGIN ERROR:", err);
+      this.signInError = err.error?.message || 'Erreur de connexion';
     }
+  });
+}
+
+
+  onSignUp() {
+    if (!this.signUpForm.valid) return;
+
+    this.authService.register(this.signUpForm.value).subscribe({
+      next: () => {
+        alert("Compte créé 🎉");
+        this.switchToSignIn();
+      },
+      error: err => this.signUpError = err.error?.msg || 'Erreur lors de l’inscription'
+    });
   }
 
-  onSignUp(): void {
-    if (this.signUpForm.valid) {
-      const formValue = this.signUpForm.value;
-      console.log('Sign Up Attempt:', formValue);
-      
-      // Ici vous pouvez appeler votre service d'inscription
-      // this.authService.signUp(formValue).subscribe(...)
-      
-      // Exemple de succès
-      // this.switchToSignIn();
-      // this.signUpForm.reset();
-    }
-  }
-
-  // Getters pour faciliter l'accès aux contrôles dans le template
   get signInEmail() { return this.signInForm.get('email'); }
   get signInPassword() { return this.signInForm.get('password'); }
   get signUpUsername() { return this.signUpForm.get('username'); }
@@ -95,4 +96,5 @@ export class SigninSignup implements OnInit {
   get signUpEmail() { return this.signUpForm.get('email'); }
   get signUpPassword() { return this.signUpForm.get('password'); }
   get signUpConfirmPassword() { return this.signUpForm.get('confirmPassword'); }
+
 }
