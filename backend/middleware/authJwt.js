@@ -1,20 +1,24 @@
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
-  const token = req.headers['x-access-token'];
-  
-  if (!token) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(403).json({ message: 'Aucun token fourni' });
   }
-  
+
+  const token = authHeader.split(' ')[1];
+
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: 'Non autorisé' });
     }
+
     req.userId = decoded.id;
     next();
   });
 };
+
 
 const isAdmin = async (req, res, next) => {
   try {

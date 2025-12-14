@@ -6,17 +6,24 @@ const { initialRoles } = require('./models/Role');
 const { createAdminUser, createDefaultUsers } = require('./config/initialSetup');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const visitRoutes = require('./routes/visitRoutes');
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+
+
 app.use(cors({
   origin: 'http://localhost:4200',
-  credentials: true
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
+
 app.use(express.json());
+
 
 // Connexion à MongoDB
 const dbConfig = require('./config/db');
@@ -37,6 +44,9 @@ mongoose.connect(dbConfig.url)
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+
+app.use('/api/visits', visitRoutes);
+
 
 // Route test
 app.get('/', (req, res) => {

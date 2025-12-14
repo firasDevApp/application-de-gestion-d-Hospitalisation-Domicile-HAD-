@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { VisitService } from '../../../../services/visit.service';
+
+
 
 @Component({
   selector: 'app-demande-visit',
@@ -12,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class DemandeVisit {
   @Output() closeModal = new EventEmitter<void>();
   @Output() visitRequested = new EventEmitter<any>();
-
+constructor(private visitService: VisitService) {}
   // Types de visite disponibles
   visitTypes = [
     { id: 'consultation', name: 'Consultation médicale' },
@@ -24,41 +27,27 @@ export class DemandeVisit {
   ];
 
   // Professionnels disponibles
-  professionals = [
-    { id: 1, name: 'Dr. Sophie Martin', specialty: 'Médecin Généraliste' },
-    { id: 2, name: 'Dr. Jean Dupont', specialty: 'Cardiologue' },
-    { id: 3, name: 'Inf. Pierre Moreau', specialty: 'Infirmier' },
-    { id: 4, name: 'Inf. Marie Lambert', specialty: 'Infirmière' },
-    { id: 5, name: 'Dr. Paul Bernard', specialty: 'Kinésithérapeute' }
+  prefferedInfermier = [
+    { id: "69398aebb6298de1011020e0", name: 'Dr. Sophie Martin', specialty: 'Médecin Généraliste' },
+    { id: "2", name: 'Dr. Jean Dupont', specialty: 'Cardiologue' },
+    { id: "3", name: 'Inf. Pierre Moreau', specialty: 'Infirmier' },
+    { id: "4", name: 'Inf. Marie Lambert', specialty: 'Infirmière' },
+    { id: "5", name: 'Dr. Paul Bernard', specialty: 'Kinésithérapeute' }
   ];
 
-  // Priorités
-  priorities = [
-    { id: 'normal', name: 'Normale', color: '#4ecdc4' },
-    { id: 'urgent', name: 'Urgente', color: '#ff6b6b' },
-    { id: 'programmee', name: 'Programmée', color: '#45b7d1' }
-  ];
+ 
 
   // Données du formulaire
   formData = {
     visitType: '',
-    professional: '',
+    prefferedInfermier: '',
     date: '',
     time: '',
-    priority: 'normal',
     description: '',
     symptoms: '',
-    isEmergency: false,
-    preferredTimeSlot: 'morning'
   };
 
-  // Crénaux horaires
-  timeSlots = [
-    { value: 'morning', label: 'Matin (8h - 12h)' },
-    { value: 'afternoon', label: 'Après-midi (14h - 18h)' },
-    { value: 'evening', label: 'Soir (18h - 20h)' },
-    { value: 'anytime', label: 'À tout moment' }
-  ];
+ 
 
   // Dates indisponibles (exemple)
   unavailableDates: string[] = [
@@ -77,63 +66,59 @@ export class DemandeVisit {
   }
 
   // Méthode pour soumettre la demande
-  onSubmit() {
-    this.errors = [];
-    this.isSubmitting = true;
+ onSubmit() {
+  this.errors = [];
+  this.isSubmitting = true;
 
-    // Validation
-    if (!this.formData.visitType) {
-      this.errors.push('Veuillez sélectionner un type de visite');
-    }
-    if (!this.formData.date) {
-      this.errors.push('Veuillez sélectionner une date');
-    }
-    if (!this.formData.time && !this.formData.preferredTimeSlot) {
-      this.errors.push('Veuillez sélectionner un horaire');
-    }
-    if (!this.formData.description) {
-      this.errors.push('Veuillez décrire la raison de la visite');
-    }
+  if (!this.formData.visitType) {
+    this.errors.push('Veuillez sélectionner un type de visite');
+  }
+  if (!this.formData.date) {
+    this.errors.push('Veuillez sélectionner une date');
+  }
+  if (!this.formData.description) {
+    this.errors.push('Veuillez décrire la raison de la visite');
+  }
 
-    // Vérifier si la date est disponible
-    if (this.formData.date && this.unavailableDates.includes(this.formData.date)) {
-      this.errors.push('Cette date n\'est pas disponible. Veuillez en choisir une autre.');
-    }
+  if (this.errors.length > 0) {
+    this.isSubmitting = false;
+    return;
+  }
 
-    if (this.errors.length > 0) {
-      this.isSubmitting = false;
-      return;
-    }
+  const payload = {
+    visitType: this.formData.visitType,
+    prefferedInfermier: this.formData.prefferedInfermier || null,
+    date: this.formData.date,
+    time: this.formData.time || null,
+    description: this.formData.description,
+    symptoms: this.formData.symptoms || ''
+  };
 
-    // Simuler un appel API
-    setTimeout(() => {
-      const visitRequest = {
-        ...this.formData,
-        id: Date.now(),
-        status: 'pending',
-        requestedAt: new Date().toISOString(),
-        patientName: 'Jean Dupont' // À remplacer par les données du patient connecté
-      };
+  this.visitService.demandeVisit(payload).subscribe({
+    next: (res) => {
+      this.visitRequested.emit(res.visit);
 
-      this.visitRequested.emit(visitRequest);
-      this.isSubmitting = false;
-      
-      // Réinitialiser le formulaire
       this.formData = {
         visitType: '',
-        professional: '',
+        prefferedInfermier: '',
         date: '',
         time: '',
-        priority: 'normal',
         description: '',
-        symptoms: '',
-        isEmergency: false,
-        preferredTimeSlot: 'morning'
+        symptoms: ''
       };
 
+      this.isSubmitting = false;
       this.onClose();
-    }, 1500);
-  }
+    },
+    error: (err) => {
+      this.isSubmitting = false;
+      this.errors.push(
+        err?.error?.message || 'Erreur lors de l’envoi de la demande'
+      );
+    }
+  });
+}
+
 
   // Méthode pour définir la date d'aujourd'hui
   setToday() {
@@ -171,12 +156,5 @@ export class DemandeVisit {
   // Vérifier si une date est indisponible
   isDateUnavailable(date: string): boolean {
     return this.unavailableDates.includes(date);
-  }
-
-  // Changer la priorité en urgence
-  setEmergency() {
-    this.formData.isEmergency = true;
-    this.formData.priority = 'urgent';
-    this.formData.preferredTimeSlot = 'anytime';
   }
 }

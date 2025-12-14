@@ -46,13 +46,13 @@
           </div>
 
           <div class="form-group">
-            <label for="professional">Professionnel souhaité</label>
-            <select id="professional" 
-                    name="professional" 
-                    [(ngModel)]="formData.professional">
+            <label for="prefferedInfermier">Infermier souhaité</label>
+            <select id="prefferedInfermier" 
+                    name="prefferedInfermier" 
+                    [(ngModel)]="formData.prefferedInfermier">
               <option value="">Aucune préférence</option>
-              @for (prof of professionals; track prof.id) {
-                <option [value]="prof.id">{{ prof.name }} - {{ prof.specialty }}</option>
+              @for (pinf of prefferedInfermier; track pinf.id) {
+                <option [value]="pinf.id">{{ pinf.name }} - {{ pinf.specialty }}</option>
               }
             </select>
           </div>
@@ -62,14 +62,6 @@
         <div class="form-section">
           <h3><i class="fas fa-clock"></i> Date et heure</h3>
           
-          <div class="quick-dates">
-            <button type="button" class="btn-date" (click)="setToday()">
-              <i class="fas fa-calendar-day"></i> Aujourd'hui
-            </button>
-            <button type="button" class="btn-date" (click)="setTomorrow()">
-              <i class="fas fa-calendar-alt"></i> Demain
-            </button>
-          </div>
 
           <div class="form-group">
             <label for="date">Date souhaitée *</label>
@@ -97,57 +89,10 @@
                    max="20:00">
           </div>
 
-          <div class="form-group">
-            <label>Ou sélectionnez un créneau</label>
-            <div class="time-slot-grid">
-              @for (slot of timeSlots; track slot.value) {
-                <button type="button" 
-                        class="time-slot-btn"
-                        [class.active]="formData.preferredTimeSlot === slot.value"
-                        (click)="formData.preferredTimeSlot = slot.value">
-                  {{ slot.label }}
-                </button>
-              }
-            </div>
-          </div>
+         
         </div>
 
-        <!-- Priorité et urgence -->
-        <div class="form-section">
-          <h3><i class="fas fa-exclamation-circle"></i> Priorité</h3>
-          
-          <div class="priority-grid">
-            @for (priority of priorities; track priority.id) {
-              <button type="button" 
-                      class="priority-btn"
-                      [style.background]="priority.color"
-                      [class.active]="formData.priority === priority.id"
-                      (click)="formData.priority = priority.id">
-                <i class="fas fa-flag"></i>
-                {{ priority.name }}
-              </button>
-            }
-          </div>
-
-          <div class="emergency-section">
-            <div class="emergency-checkbox">
-              <input type="checkbox" 
-                     id="emergency" 
-                     name="isEmergency"
-                     [(ngModel)]="formData.isEmergency"
-                     (change)="setEmergency()">
-              <label for="emergency">
-                <i class="fas fa-ambulance"></i> Visite d'urgence
-              </label>
-            </div>
-            @if (formData.isEmergency) {
-              <div class="emergency-alert">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p>Pour les urgences immédiates, contactez le 15</p>
-              </div>
-            }
-          </div>
-        </div>
+       
 
         <!-- Détails -->
         <div class="form-section">

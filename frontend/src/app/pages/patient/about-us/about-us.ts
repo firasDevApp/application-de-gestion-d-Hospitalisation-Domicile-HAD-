@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { PatientHeader } from '../../../components/patient/patient-header/patient-header';
+import { PatientNav } from '../../../components/patient/patient-nav/patient-nav';
+import { PatientFooter } from '../../../components/patient/patient-footer/patient-footer';
+import { Chatbot } from '../../../components/chatbot/chatbot';
 @Component({
   selector: 'app-about-us',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule,  PatientHeader, PatientNav, PatientFooter, Chatbot, RouterModule],
   templateUrl: './about-us.html',
   styleUrls: ['./about-us.css']
 })

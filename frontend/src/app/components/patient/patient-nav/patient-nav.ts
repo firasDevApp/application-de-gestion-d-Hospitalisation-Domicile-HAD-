@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 interface NavItem {
   path: string;
@@ -18,87 +19,70 @@ interface NavItem {
   styleUrls: ['./patient-nav.css']
 })
 export class PatientNav {
+
   navItems: NavItem[] = [
-    { 
-      path: '/patient/home', 
-      label: 'Tableau de bord', 
-      icon: 'fa-home', 
-      active: true 
-    },
-    { 
-      path: '/patient/dossier', 
-      label: 'Dossier médical', 
-      icon: 'fa-file-medical', 
-      active: false 
-    },
-    { 
-      path: '/patient/visites', 
-      label: 'Visites', 
-      icon: 'fa-calendar-check', 
-      active: false,
-      
-    },
-     { 
-      path: '/patient/about-us', 
-      label: 'A propos de nous', 
-      icon: 'fa-info-circle', 
-      active: false,
-      
-    },
-    { 
-      path: '/patient/contact', 
-      label: 'Contact', 
-      icon: 'mdi mdi-email', 
-      active: false,
-      
-    },
+    { path: '/patient/home', label: 'Tableau de bord', icon: 'fa-home', active: false },
+    { path: '/patient/dossier', label: 'Dossier médical', icon: 'fa-file-medical', active: false },
+    { path: '/patient/visites', label: 'Visites', icon: 'fa-calendar-check', active: false },
+    { path: '/patient/about-us', label: 'A propos de nous', icon: 'fa-info-circle', active: false },
+    { path: '/patient/contact', label: 'Contact', icon: 'mdi mdi-email', active: false },
   ];
 
   isMobileMenuOpen = false;
   isMobileView = false;
 
   constructor(private router: Router) {
-    // Vérification sécurisée
     if (typeof window !== 'undefined') {
       this.checkViewport();
     }
+
+    // Synchronisation automatique sur changement de route
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateActiveByUrl();
+      });
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
+  ngOnInit() {
+    this.updateActiveByUrl(); // Init correct si reload page
+  }
+
+  updateActiveByUrl() {
+    const currentUrl = this.router.url;
+    this.navItems.forEach(item => {
+      item.active = currentUrl.startsWith(item.path);
+    });
+  }
+
+  @HostListener('window:resize')
+  onResize() {
     if (typeof window !== 'undefined') {
       this.checkViewport();
     }
   }
 
   checkViewport() {
-    if (typeof window !== 'undefined') {
-      this.isMobileView = window.innerWidth <= 768;
-      if (!this.isMobileView) {
-        this.isMobileMenuOpen = false;
-      }
+    this.isMobileView = window.innerWidth <= 768;
+    if (!this.isMobileView) {
+      this.isMobileMenuOpen = false;
     }
   }
 
   setActive(item: NavItem) {
     this.navItems.forEach(nav => nav.active = false);
     item.active = true;
-    
+
     if (this.isMobileView) {
       this.isMobileMenuOpen = false;
     }
   }
 
   goToDashboard() {
-    this.setActive(this.navItems[0]);
     this.router.navigate(['/patient/home']);
   }
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
-  }
-
-  isActiveRoute(route: string): boolean {
-    return this.router.url === route;
   }
 }

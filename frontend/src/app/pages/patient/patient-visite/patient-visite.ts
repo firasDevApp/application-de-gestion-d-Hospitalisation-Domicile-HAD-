@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DemandeVisit } from '../../../components/patient/modals/demande-visit/demande-visit';
-
+import { PatientHeader } from '../../../components/patient/patient-header/patient-header';
+import { PatientNav } from '../../../components/patient/patient-nav/patient-nav';
+import { PatientFooter } from '../../../components/patient/patient-footer/patient-footer';
+import { Chatbot } from '../../../components/chatbot/chatbot';
 @Component({
   selector: 'app-patient-visite',
   standalone: true,
-  imports: [CommonModule, DemandeVisit],
+  imports: [CommonModule, DemandeVisit, PatientHeader, PatientNav, PatientFooter, Chatbot],
   templateUrl: './patient-visite.html',
   styleUrls: ['./patient-visite.css']
 })

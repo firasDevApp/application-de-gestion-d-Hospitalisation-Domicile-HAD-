@@ -1,4 +1,17 @@
- <!-- Menu du dossier médical -->
+<!-- patient.html -->
+<div class="patient-layout">
+  <!-- Header Patient -->
+  <app-patient-header></app-patient-header>
+
+  <!-- Navigation Patient -->
+  <app-patient-nav></app-patient-nav>
+
+  <!-- Contenu principal -->
+  <main class="patient-content">
+  
+    
+    <!-- Contenu dynamique -->
+    <!-- Menu du dossier médical -->
         <div class="medical-menu">
             <a href="patient/dossier#informations" class="active">Informations</a>
             <a href="patient/dossier#antecedents">Antécédents</a>
@@ -217,3 +230,11 @@
                 </div>
             </div>
         </div>
+  </main>
+
+  <!-- Footer Patient -->
+  <app-patient-footer></app-patient-footer>
+
+  <!-- Chatbot (optionnel) -->
+  <app-chatbot></app-chatbot>
+</div>
